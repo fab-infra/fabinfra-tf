@@ -15,3 +15,16 @@ resource "google_storage_bucket" "gcs_bucket_backups" {
   storage_class               = "COLDLINE"
   uniform_bucket_level_access = true
 }
+
+// Service Account with Storage Object Admin role
+resource "google_service_account" "gcs_sa" {
+  account_id   = "storage-writer"
+  project      = var.gcp_project_id
+  display_name = "Cloud Storage Writer"
+}
+resource "google_project_iam_member" "gcs_sa_iam_object_admin" {
+  project = var.gcp_project_id
+  role    = "roles/storage.objectAdmin"
+  member  = "serviceAccount:${google_service_account.gcs_sa.email}"
+}
+
