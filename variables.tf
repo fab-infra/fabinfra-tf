@@ -48,3 +48,6 @@ variable "uptime_check_urls" {
   type        = list(string)
   description = "Uptime check HTTPS URLs"
 }
+variable "uptime_check_notification_email" {
+  description = "Uptime check notification email address"
+}
