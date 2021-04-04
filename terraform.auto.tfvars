@@ -49,3 +49,10 @@ dns_records = [
   { name = "sy02.vpn",              ttl = 0,     type = "A",      target = "10.8.2.114" },
   { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks11.srv" },
 ]
+
+# Uptime checks
+uptime_check_urls = [
+  "https://grafana.fabinfra.net/login",
+  "https://k8s.fabinfra.net/",
+  "https://kibana.fabinfra.net/login",
+]
