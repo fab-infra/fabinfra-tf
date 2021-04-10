@@ -19,6 +19,7 @@ dns_records = [
   { name = "",                      ttl = 0,     type = "MX",     target = "10 mx3.mail.ovh.net." },
   { name = "",                      ttl = 600,   type = "SPF",    target = "\"v=spf1 a:ks11.srv.fabinfra.net a:sy02.srv.fabinfra.net include:mx.ovh.com ?all\"" },
   { name = "",                      ttl = 0,     type = "TXT",    target = "\"google-site-verification=mzVqztJJ7oLUjOvVqbTzLWAspa6kfCn8nZ2DUHSsIug\"" },
+  { name = "_dmarc",                ttl = 0,     type = "DMARC",  target = "v=DMARC1;p=none;rua=mailto:postmaster@fabinfra.net;" },
   { name = "grafana",               ttl = 1800,  type = "CNAME",  target = "k8s" },
   { name = "hs11.srv",              ttl = 0,     type = "A",      target = "192.168.0.105" },
   { name = "hs12.srv",              ttl = 0,     type = "A",      target = "192.168.0.101" },
