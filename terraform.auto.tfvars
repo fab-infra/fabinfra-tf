@@ -50,6 +50,13 @@ dns_records = [
   { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks11.srv" },
 ]
 
+# VPN
+vpn_machine_type = "f1-micro"
+vpn_zones = ["europe-west1-c"]
+#vpn_cacert = "toComplete"
+#vpn_servercert = "toComplete"
+#vpn_serverkey = "toComplete"
+
 # Uptime checks
 uptime_check_urls = [
   "https://grafana.fabinfra.net/login",

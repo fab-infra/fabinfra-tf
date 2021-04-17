@@ -42,6 +42,28 @@ variable "dns_records" {
   description = "DNS records"
 }
 
+// VPN
+variable "vpn_machine_type" {
+  description = "VPN instance machine type"
+}
+variable "vpn_zones" {
+  default     = []
+  type        = list(string)
+  description = "VPN instance zones (e.g. us-east1-b, europe-west1-b)"
+}
+variable "vpn_cacert" {
+  description = "VPN certificate authority (PEM-encoded)"
+  sensitive   = true
+}
+variable "vpn_servercert" {
+  description = "VPN server certificate (PEM-encoded)"
+  sensitive   = true
+}
+variable "vpn_serverkey" {
+  description = "VPN server key (PEM-encoded)"
+  sensitive   = true
+}
+
 // Uptime checks
 variable "uptime_check_urls" {
   default     = []
