@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install monitoring agent
+curl -sS https://dl.google.com/cloudagents/install-monitoring-agent.sh | bash -s
+
 # Install packages
 apt-get update
 apt-get install -y firewalld openvpn
