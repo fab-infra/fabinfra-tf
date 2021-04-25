@@ -52,7 +52,7 @@ dns_records = [
 
 # VPN
 vpn_machine_type = "f1-micro"
-vpn_zones = ["europe-west1-c"]
+#vpn_zones = ["europe-west1-c", "us-east1-c"]
 #vpn_cacert = "toComplete"
 #vpn_servercert = "toComplete"
 #vpn_serverkey = "toComplete"
