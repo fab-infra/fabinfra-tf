@@ -1,0 +1,19 @@
+fullnameOverride: backups
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+nodeSelector:
+  server-role-infra: "true"
+
+schedules:
+  mysql: "0 3 * * *"
+
+env:
+  BACKUP_BACKEND: multi
+  BACKUP_BACKENDS: swift,gcs,ftp
+  BACKUP_SWIFT_CONTAINER: backups_infra
+  BACKUP_GCS_BUCKET: fabinfra-net-backups
+  BACKUP_FTP_HOST: ftpback-rbx3-173.ovh.net
+  BACKUP_FTP_DIR: crespel.me

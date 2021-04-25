@@ -27,6 +27,21 @@ variable "gcp_region" {
   description = "GCP region"
 }
 
+// Kubernetes provider
+variable "k8s_host" {
+  description = "Kubernetes master host name"
+}
+variable "k8s_client_cert" {
+  description = "Kubernetes client certificate (base64-encoded PEM)"
+}
+variable "k8s_client_key" {
+  description = "Kubernetes client private key (base64-encoded PEM)"
+  sensitive   = true
+}
+variable "k8s_ca_cert" {
+  description = "Kubernetes cluster CA certificate (base64-encoded PEM)"
+}
+
 // DNS config
 variable "dns_zone" {
   description = "DNS zone name"
@@ -40,6 +55,47 @@ variable "dns_records" {
     target = string
   }))
   description = "DNS records"
+}
+
+// Infra
+variable "infra_namespace" {
+  description = "Infra Kubernetes namespace"
+}
+variable "infra_backups_openrc" {
+  description = "OpenStack openrc file for backups"
+  sensitive   = true
+}
+variable "infra_backups_sa" {
+  description = "Google Service Account JSON key for backups"
+  sensitive   = true
+}
+variable "infra_backups_ftp_username" {
+  description = "FTP username for backups"
+}
+variable "infra_backups_ftp_password" {
+  description = "FTP password for backups"
+  sensitive   = true
+}
+variable "infra_backups_mysql_username" {
+  description = "MySQL username for backups"
+}
+variable "infra_backups_mysql_password" {
+  description = "MySQL password for backups"
+  sensitive   = true
+}
+variable "infra_mailserver_dkim_private_key" {
+  description = "DKIM private key (PEM-encoded)"
+  sensitive   = true
+}
+
+// Uptime checks
+variable "uptime_check_urls" {
+  default     = []
+  type        = list(string)
+  description = "Uptime check HTTPS URLs"
+}
+variable "uptime_check_notification_email" {
+  description = "Uptime check notification email address"
 }
 
 // VPN
@@ -62,14 +118,4 @@ variable "vpn_servercert" {
 variable "vpn_serverkey" {
   description = "VPN server key (PEM-encoded)"
   sensitive   = true
-}
-
-// Uptime checks
-variable "uptime_check_urls" {
-  default     = []
-  type        = list(string)
-  description = "Uptime check HTTPS URLs"
-}
-variable "uptime_check_notification_email" {
-  description = "Uptime check notification email address"
 }

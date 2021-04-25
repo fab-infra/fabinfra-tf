@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mailserver.fullname" . }}
+  labels:
+    {{- include "mailserver.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mailserver.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mailserver.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "mailserver.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.dkim.enabled }}
+      initContainers:
+        - name: copy-opendkim-secrets
+          image: busybox
+          args: ['/bin/sh', '-c', 'cp /var/secrets/opendkim/* /var/lib/opendkim && chmod -R 700 /var/lib/opendkim']
+          volumeMounts:
+            - mountPath: /var/lib/opendkim
+              name: opendkim-data
+            - mountPath: /var/secrets/opendkim
+              name: opendkim-secret
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: smtp
+              containerPort: 25
+              protocol: TCP
+            - name: submission
+              containerPort: 587
+              protocol: TCP
+          env:
+            {{- if .Values.dkim.enabled }}
+            - name: SMTPD_MILTERS
+              value: inet:localhost:8891
+            {{- end }}
+            {{- range $key, $value := .Values.env }}
+            - name: "{{ tpl $key $ }}"
+              value: "{{ tpl (print $value) $ }}"
+            {{- end }}
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            tcpSocket:
+              port: smtp
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            tcpSocket:
+              port: smtp
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.volumes.postfix }}
+          volumeMounts:
+            - mountPath: /var/spool/postfix
+              name: postfix
+          {{- end }}
+        - name: opendkim
+          image: "{{ .Values.dkim.image.repository }}:{{ .Values.dkim.image.tag }}"
+          imagePullPolicy: {{ .Values.dkim.image.pullPolicy }}
+          ports:
+            - name: dkim
+              containerPort: 8891
+          env:
+            - name: DKIM_DOMAIN
+              value: {{ .Values.dkim.config.domain }}
+            - name: DKIM_KEYFILE
+              value: /var/lib/opendkim/private.key
+            - name: DKIM_SELECTOR
+              value: {{ .Values.dkim.config.selector }}
+            - name: DKIM_INTERNALHOSTS
+              value: {{ .Values.dkim.config.internalHosts }}
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            tcpSocket:
+              port: dkim
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            tcpSocket:
+              port: dkim
+          resources:
+            {{- toYaml .Values.dkim.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /var/lib/opendkim
+              name: opendkim-data
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- with .Values.volumes.postfix }}
+        - name: postfix
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- if .Values.dkim.enabled }}
+        - name: opendkim-data
+          emptyDir: {}
+        - name: opendkim-secret
+          secret:
+            secretName: {{ include "mailserver.fullname" . }}-dkim-key
+        {{- end }}

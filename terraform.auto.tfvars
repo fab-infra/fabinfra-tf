@@ -9,6 +9,12 @@ ovh_endpoint = "ovh-eu"
 gcp_project_id = "fabinfra-net"
 gcp_region = "europe-west1"
 
+# Kubernetes provider
+k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
+#k8s_client_cert = "toComplete"
+#k8s_client_key = "toComplete"
+#k8s_ca_cert = "toComplete"
+
 # DNS records
 dns_zone = "fabinfra.net"
 dns_records = [
@@ -50,12 +56,15 @@ dns_records = [
   { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks11.srv" },
 ]
 
-# VPN
-vpn_machine_type = "f1-micro"
-#vpn_zones = ["europe-west1-c", "us-east1-c"]
-#vpn_cacert = "toComplete"
-#vpn_servercert = "toComplete"
-#vpn_serverkey = "toComplete"
+# Infra
+infra_namespace = "infra"
+#infra_backups_openrc = "toComplete"
+#infra_backups_sa = "toComplete"
+#infra_backups_ftp_username = "toComplete"
+#infra_backups_ftp_password = "toComplete"
+#infra_backups_mysql_username = "toComplete"
+#infra_backups_mysql_password = "toComplete"
+#infra_mailserver_dkim_private_key = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [
@@ -64,3 +73,10 @@ uptime_check_urls = [
   "https://kibana.fabinfra.net/login",
 ]
 uptime_check_notification_email = "webmaster@fabinfra.net"
+
+# VPN
+vpn_machine_type = "f1-micro"
+#vpn_zones = ["europe-west1-c", "us-east1-c"]
+#vpn_cacert = "toComplete"
+#vpn_servercert = "toComplete"
+#vpn_serverkey = "toComplete"

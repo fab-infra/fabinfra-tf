@@ -1,0 +1,98 @@
+{{- if .Values.schedules.mysql -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "backups.fullname" . }}-mysql
+  labels:
+    {{- include "backups.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedules.mysql | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: {{ .Values.backoffLimit }}
+      template:
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "backups.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: backuptools
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              args: ['/home/backups/backup-mysql.sh']
+              env:
+                - name: HOME
+                  value: /home/backups
+                {{- range $key, $value := .Values.env }}
+                - name: "{{ tpl $key $ }}"
+                  value: "{{ tpl (print $value) $ }}"
+                {{- end }}
+                {{- if .Values.secrets.ftp.username }}
+                - name: BACKUP_FTP_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: username
+                      name: {{ include "backups.fullname" . }}-ftp-user
+                - name: BACKUP_FTP_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: password
+                      name: {{ include "backups.fullname" . }}-ftp-user
+                {{- end }}
+                {{- if .Values.secrets.mysql.username }}
+                - name: MYSQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: username
+                      name: {{ include "backups.fullname" . }}-mysql-user
+                - name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: password
+                      name: {{ include "backups.fullname" . }}-mysql-user
+                {{- end }}
+              volumeMounts:
+                {{- if .Values.secrets.swift.openrc }}
+                - mountPath: /home/backups/backup-openrc.sh
+                  name: backup-openrc
+                  subPath: backup-openrc.sh
+                  readOnly: true
+                {{- end }}
+                {{- if .Values.secrets.gcs.sa }}
+                - mountPath: /home/backups/backup-sa.json
+                  name: backup-sa
+                  subPath: backup-sa.json
+                  readOnly: true
+                {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          volumes:
+            {{- if .Values.secrets.swift.openrc }}
+            - name: backup-openrc
+              secret:
+                secretName: {{ include "backups.fullname" . }}-openrc
+            {{- end }}
+            {{- if .Values.secrets.gcs.sa }}
+            - name: backup-sa
+              secret:
+                secretName: {{ include "backups.fullname" . }}-sa
+            {{- end }}
+{{- end }}

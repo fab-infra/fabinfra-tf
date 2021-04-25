@@ -1,0 +1,22 @@
+fullnameOverride: mailserver
+
+nodeSelector:
+  server-role-infra: "true"
+
+env:
+  FROM_HEADER: fabinfra.net
+  POSTFIX_MYHOSTNAME: sy02.srv.fabinfra.net
+  POSTFIX_MYNETWORKS: 127.0.0.0/8,10.244.0.0/16
+
+volumes:
+  postfix:
+    hostPath:
+      path: /home/apps/mailserver/postfix
+      type: DirectoryOrCreate
+
+dkim:
+  enabled: true
+  config:
+    domain: fabinfra.net
+    selector: march2016
+    internalHosts: 127.0.0.0/8,10.244.0.0/16
