@@ -42,6 +42,14 @@ variable "k8s_ca_cert" {
   description = "Kubernetes cluster CA certificate (base64-encoded PEM)"
 }
 
+// Kubernetes config
+variable "k8s_dashboard_version" {
+  description = "Kubernetes Dashboard chart version"
+}
+variable "k8s_ingress_nginx_version" {
+  description = "Ingress Nginx Helm chart version"
+}
+
 // DNS config
 variable "dns_zone" {
   description = "DNS zone name"

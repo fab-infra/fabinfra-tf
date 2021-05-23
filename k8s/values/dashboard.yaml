@@ -1,0 +1,6 @@
+nodeSelector:
+  server-role-infra: 'true'
+ingress:
+  enabled: true
+  hosts:
+    - k8s.fabinfra.net

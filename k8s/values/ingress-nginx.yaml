@@ -1,0 +1,15 @@
+controller:
+  image:
+    digest:
+  config:
+    use-forwarded-headers: 'true'
+    proxy-body-size: 100m
+  kind: DaemonSet
+  nodeSelector:
+    server-role-web: 'true'
+  service:
+    externalTrafficPolicy: Local
+    type: NodePort
+    nodePorts:
+      http: 30080
+      https: 30443
