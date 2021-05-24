@@ -63,6 +63,26 @@ resource "helm_release" "k8s_dashboard" {
   values = [file("${path.module}/k8s/values/dashboard.yaml")]
 }
 
+// Elastic ECK operator namespace
+resource "kubernetes_namespace" "k8s_elastic_operator_ns" {
+  metadata {
+    name = "elastic-system"
+    labels = {
+      "name"          = "elastic-system"
+      "control-plane" = "elastic-operator"
+    }
+  }
+}
+
+// Elastic ECK operator
+resource "helm_release" "k8s_elastic_operator" {
+  name       = "elastic-operator"
+  repository = "https://helm.elastic.co"
+  chart      = "eck-operator"
+  version    = var.k8s_elastic_operator_version
+  namespace  = kubernetes_namespace.k8s_elastic_operator_ns.metadata[0].name
+}
+
 // Ingress Nginx namespace
 resource "kubernetes_namespace" "k8s_ingress_nginx_ns" {
   metadata {

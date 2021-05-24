@@ -18,6 +18,7 @@ k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
 # Kubernetes config
 k8s_calico_version = "3.19.1"
 k8s_dashboard_version = "3.0.1"
+k8s_elastic_operator_version = "1.5.0"
 k8s_ingress_nginx_version = "3.30.0"
 
 # DNS records

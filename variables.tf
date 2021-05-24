@@ -49,6 +49,9 @@ variable "k8s_calico_version" {
 variable "k8s_dashboard_version" {
   description = "Kubernetes Dashboard Helm chart version"
 }
+variable "k8s_elastic_operator_version" {
+  description = "Elastic ECK operator Helm chart version"
+}
 variable "k8s_ingress_nginx_version" {
   description = "Ingress Nginx Helm chart version"
 }
