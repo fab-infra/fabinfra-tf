@@ -64,6 +64,10 @@ affinity: {}
 env: {}
 envFromSecret: ""
 
+secrets:
+  root: {}
+    # password: 
+
 volumes:
   data: {}
     # hostPath:

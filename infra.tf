@@ -126,4 +126,9 @@ resource "helm_release" "infra_mysql" {
   namespace = kubernetes_namespace.infra_ns.metadata[0].name
 
   values = [file("${path.module}/infra/values/mysql.yaml")]
+
+  set_sensitive {
+    name  = "secrets.root.password"
+    value = var.infra_mysql_root_password
+  }
 }

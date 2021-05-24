@@ -37,13 +37,18 @@ spec:
             - name: tcp
               containerPort: 3306
               protocol: TCP
-          {{- if .Values.env }}
           env:
+            {{- if .Values.secrets.root.password }}
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "mysql.fullname" . }}-root-secret
+                  key: password
+            {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: "{{ tpl $key $ }}"
               value: "{{ tpl (print $value) $ }}"
             {{- end }}
-          {{- end }}
           {{- if .Values.envFromSecret }}
           envFrom:
             - secretRef:
