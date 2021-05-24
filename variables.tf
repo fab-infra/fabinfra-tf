@@ -43,8 +43,11 @@ variable "k8s_ca_cert" {
 }
 
 // Kubernetes config
+variable "k8s_calico_version" {
+  description = "Calico Helm chart version"
+}
 variable "k8s_dashboard_version" {
-  description = "Kubernetes Dashboard chart version"
+  description = "Kubernetes Dashboard Helm chart version"
 }
 variable "k8s_ingress_nginx_version" {
   description = "Ingress Nginx Helm chart version"

@@ -33,25 +33,13 @@ resource "kubernetes_cluster_role_binding" "k8s_admin_user_cluster_role_binding"
   }
 }
 
-// Ingress Nginx namespace
-resource "kubernetes_namespace" "k8s_ingress_nginx_ns" {
-  metadata {
-    name = "ingress-nginx"
-    labels = {
-      "name" = "ingress-nginx"
-    }
-  }
-}
+// Calico Tigera operator
+resource "helm_release" "k8s_calico" {
+  name      = "calico"
+  chart     = "https://github.com/projectcalico/calico/releases/download/v${var.k8s_calico_version}/tigera-operator-v3.19.1-1.tgz"
+  namespace = "kube-system"
 
-// Ingress Nginx
-resource "helm_release" "k8s_ingress_nginx" {
-  name       = "ingress-nginx"
-  repository = "https://kubernetes.github.io/ingress-nginx/"
-  chart      = "ingress-nginx"
-  version    = var.k8s_ingress_nginx_version
-  namespace  = kubernetes_namespace.k8s_ingress_nginx_ns.metadata[0].name
-
-  values = [file("${path.module}/k8s/values/ingress-nginx.yaml")]
+  values = [file("${path.module}/k8s/values/calico.yaml")]
 }
 
 // Dashboard namespace
@@ -73,4 +61,25 @@ resource "helm_release" "k8s_dashboard" {
   namespace  = kubernetes_namespace.k8s_dashboard_ns.metadata[0].name
 
   values = [file("${path.module}/k8s/values/dashboard.yaml")]
+}
+
+// Ingress Nginx namespace
+resource "kubernetes_namespace" "k8s_ingress_nginx_ns" {
+  metadata {
+    name = "ingress-nginx"
+    labels = {
+      "name" = "ingress-nginx"
+    }
+  }
+}
+
+// Ingress Nginx
+resource "helm_release" "k8s_ingress_nginx" {
+  name       = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx/"
+  chart      = "ingress-nginx"
+  version    = var.k8s_ingress_nginx_version
+  namespace  = kubernetes_namespace.k8s_ingress_nginx_ns.metadata[0].name
+
+  values = [file("${path.module}/k8s/values/ingress-nginx.yaml")]
 }
