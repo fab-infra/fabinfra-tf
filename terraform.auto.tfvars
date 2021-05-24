@@ -68,6 +68,8 @@ infra_namespace = "infra"
 #infra_backups_ftp_password = "toComplete"
 #infra_backups_mysql_username = "toComplete"
 #infra_backups_mysql_password = "toComplete"
+#infra_grafana_db_password = "toComplete"
+infra_grafana_version = "6.9.1"
 #infra_mailserver_dkim_private_key = "toComplete"
 #infra_mysql_root_password = "toComplete"
 

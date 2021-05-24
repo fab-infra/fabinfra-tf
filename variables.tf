@@ -91,6 +91,13 @@ variable "infra_backups_mysql_password" {
   description = "MySQL password for backups"
   sensitive   = true
 }
+variable "infra_grafana_db_password" {
+  description = "Grafana database password"
+  sensitive   = true
+}
+variable "infra_grafana_version" {
+  description = "Grafana Helm chart version"
+}
 variable "infra_mailserver_dkim_private_key" {
   description = "DKIM private key (PEM-encoded)"
   sensitive   = true
