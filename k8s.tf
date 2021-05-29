@@ -68,8 +68,7 @@ resource "kubernetes_namespace" "k8s_elastic_operator_ns" {
   metadata {
     name = "elastic-system"
     labels = {
-      "name"          = "elastic-system"
-      "control-plane" = "elastic-operator"
+      "name" = "elastic-system"
     }
   }
 }
