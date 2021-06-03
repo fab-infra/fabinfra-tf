@@ -1,0 +1,24 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-nodeports
+spec:
+  order: 100
+  selector: has(kubernetes-host)
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+  # Deny traffic to NodePorts (TCP)
+  - action: Deny
+    protocol: TCP
+    destination:
+      selector: has(kubernetes-host)
+      ports:
+      - "30000:32767"
+  # Deny traffic to NodePorts (UDP)
+  - action: Deny
+    protocol: UDP
+    destination:
+      selector: has(kubernetes-host)
+      ports:
+      - "30000:32767"

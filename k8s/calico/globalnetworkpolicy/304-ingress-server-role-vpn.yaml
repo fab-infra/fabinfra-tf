@@ -1,0 +1,14 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-server-role-vpn
+spec:
+  order: 304
+  selector: has(kubernetes-host) && server-role-vpn == 'true'
+  ingress:
+  # Allow traffic to OpenVPN
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 1194

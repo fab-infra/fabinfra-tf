@@ -1,0 +1,56 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-k8s-masters
+spec:
+  order: 200
+  selector: has(node-role.kubernetes.io/master)
+  ingress:
+  # Allow ICMP
+  - action: Allow
+    protocol: ICMP
+  # Allow traffic to SSH
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 22
+  # Allow traffic to localhost
+  - action: Allow
+    destination:
+      nets:
+      - 127.0.0.1/32
+  # Allow traffic from masters
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(node-role.kubernetes.io/master)
+    destination:
+      ports:
+      - "2379:2380" # etcd
+      - 10250       # kubelet
+  # Allow traffic from workers
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(kubernetes-host)
+    destination:
+      ports:
+      - 6443 # API server
+  # Allow traffic from cluster
+  - action: Allow
+    protocol: TCP
+    source:
+      nets:
+      - 10.244.0.0/16
+    destination:
+      ports:
+      - 6443 # API server
+  # Allow traffic from trusted clients
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: trusted-clients == 'true'
+    destination:
+      ports:
+      - 6443 # API server

@@ -1,0 +1,48 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-k8s-hosts
+spec:
+  order: 201
+  selector: has(kubernetes-host)
+  ingress:
+  # Allow ICMP
+  - action: Allow
+    protocol: ICMP
+  # Allow traffic to SSH
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 22
+  # Allow traffic to localhost
+  - action: Allow
+    destination:
+      nets:
+      - 127.0.0.1/32
+  # Allow traffic from masters
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(node-role.kubernetes.io/master)
+    destination:
+      ports:
+      - 10250 # kubelet
+  # Allow traffic from workers (TCP)
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(kubernetes-host)
+    destination:
+      ports:
+      - 179   # BGP
+      - 5473  # Typha
+  # Allow traffic from workers (UDP)
+  - action: Allow
+    protocol: UDP
+    source:
+      selector: has(kubernetes-host)
+    destination:
+      ports:
+      - 4789  # VXLAN
+      - 51820 # WireGuard

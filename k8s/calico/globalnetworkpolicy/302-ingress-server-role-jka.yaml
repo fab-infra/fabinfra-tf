@@ -1,0 +1,15 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-server-role-jka
+spec:
+  order: 302
+  selector: has(kubernetes-host) && server-role-jka == 'true'
+  ingress:
+  # Allow traffic to JKA
+  - action: Allow
+    protocol: UDP
+    destination:
+      ports:
+      - "29070:29080" # main ports
+      - "29170:29180" # alternate ports

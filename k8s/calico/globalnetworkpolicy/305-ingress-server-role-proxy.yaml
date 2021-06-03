@@ -1,0 +1,16 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-server-role-proxy
+spec:
+  order: 305
+  selector: has(kubernetes-host) && server-role-proxy == 'true'
+  ingress:
+  # Allow traffic to proxy from trusted clients
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: trusted-clients == 'true'
+    destination:
+      ports:
+      - 3128 # squid

@@ -1,0 +1,15 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-server-role-ftp
+spec:
+  order: 303
+  selector: has(kubernetes-host) && server-role-ftp == 'true'
+  ingress:
+  # Allow traffic to FTP
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 21            # control
+      - "20000:20100" # passive

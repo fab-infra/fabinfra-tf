@@ -1,0 +1,10 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: egress-allow-all
+spec:
+  order: 999
+  selector: has(kubernetes-host)
+  egress:
+  # Allow all traffic
+  - action: Allow

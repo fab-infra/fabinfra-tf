@@ -1,0 +1,11 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkSet
+metadata:
+  name: trusted-clients
+  labels:
+    trusted-clients: 'true'
+spec:
+  nets:
+  - "10.8.0.0/8"     # RFC1918
+  - "172.16.0.0/12"  # RFC1918
+  - "192.168.0.0/16" # RFC1918

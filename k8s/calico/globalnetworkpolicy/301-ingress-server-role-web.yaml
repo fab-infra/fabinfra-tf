@@ -1,0 +1,15 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-server-role-web
+spec:
+  order: 301
+  selector: has(kubernetes-host) && server-role-web == 'true'
+  ingress:
+  # Allow traffic to HTTP(S)
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 80  # http
+      - 443 # https

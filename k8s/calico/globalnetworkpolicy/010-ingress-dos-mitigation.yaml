@@ -1,0 +1,14 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-dos-mitigation
+spec:
+  order: 10
+  selector: has(kubernetes-host)
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+  # Deny traffic as early as possible
+  - action: Deny
+    source:
+      selector: dos-deny-list == 'true'

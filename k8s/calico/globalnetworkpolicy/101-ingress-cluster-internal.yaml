@@ -1,0 +1,18 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-cluster-internal
+spec:
+  order: 101
+  selector: has(kubernetes-host)
+  preDNAT: true
+  applyOnForward: true
+  ingress:
+  # Allow traffic from workers
+  - action: Allow
+    source:
+      selector: has(kubernetes-host)
+  # Allow traffic from cluster
+  - action: Allow
+    source:
+      nets: [10.244.0.0/16]
