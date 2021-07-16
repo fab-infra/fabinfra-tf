@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: Recreate
 
 image:
-  repository: fcrespel/postfix
+  repository: ghcr.io/fab-infra/postfix
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: 3.4-opensuse15
@@ -76,7 +76,7 @@ volumes:
 dkim:
   enabled: false
   image:
-    repository: fcrespel/opendkim
+    repository: ghcr.io/fab-infra/opendkim
     pullPolicy: Always
     tag: 2.10-opensuse15
   resources: {}

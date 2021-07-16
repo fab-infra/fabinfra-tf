@@ -5,7 +5,7 @@
 backoffLimit: 0
 
 image:
-  repository: fcrespel/backuptools
+  repository: ghcr.io/fab-infra/backuptools
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: opensuse15

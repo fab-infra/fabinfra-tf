@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: Recreate
 
 image:
-  repository: fcrespel/mariadb
+  repository: ghcr.io/fab-infra/mariadb
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: 10.4-opensuse15
