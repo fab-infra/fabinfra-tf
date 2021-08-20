@@ -121,6 +121,20 @@ resource "helm_release" "infra_grafana" {
   }
 }
 
+// Logstash
+resource "helm_release" "infra_logstash" {
+  name       = "logstash"
+  chart     = "${path.module}/infra/charts/logstash"
+  namespace  = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/logstash.yaml")]
+
+  set_sensitive {
+    name  = "env.ELASTICSEARCH_PASSWORD"
+    value = var.infra_logstash_elasticsearch_password
+  }
+}
+
 // Mail server (outbound only)
 resource "helm_release" "infra_mailserver" {
   name      = "mailserver"

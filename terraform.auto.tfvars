@@ -71,6 +71,7 @@ infra_namespace = "infra"
 #infra_backups_mysql_password = "toComplete"
 #infra_grafana_db_password = "toComplete"
 infra_grafana_version = "6.15.0"
+#infra_logstash_elasticsearch_password = "toComplete"
 #infra_mailserver_dkim_private_key = "toComplete"
 #infra_mysql_root_password = "toComplete"
 

@@ -104,6 +104,10 @@ variable "infra_grafana_db_password" {
 variable "infra_grafana_version" {
   description = "Grafana Helm chart version"
 }
+variable "infra_logstash_elasticsearch_password" {
+  description = "Logstash Elasticsearch password"
+  sensitive   = true
+}
 variable "infra_mailserver_dkim_private_key" {
   description = "DKIM private key (PEM-encoded)"
   sensitive   = true
