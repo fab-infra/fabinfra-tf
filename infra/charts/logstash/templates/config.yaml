@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "logstash.fullname" . }}-config
-  labels:
-    {{- include "logstash.labels" . | nindent 4 }}
-stringData:
-  {{- toYaml .Values.config | nindent 2 }}

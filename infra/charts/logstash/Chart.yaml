@@ -1,6 +1,0 @@
-apiVersion: v2
-name: logstash
-description: Logstash logs processor
-type: application
-version: 0.1.1
-appVersion: "7.13"

@@ -27,7 +27,7 @@ resource "kubernetes_network_policy" "infra_network_policy_same_ns" {
   }
 }
 
-// Network policy for ingress
+// Network policy for ingress nginx
 resource "kubernetes_network_policy" "infra_network_policy_ingress_nginx" {
   metadata {
     name      = "allow-ingress-nginx"
@@ -49,7 +49,7 @@ resource "kubernetes_network_policy" "infra_network_policy_ingress_nginx" {
   }
 }
 
-// Network policy for elastic
+// Network policy for elastic operator
 resource "kubernetes_network_policy" "infra_network_policy_elastic_system" {
   metadata {
     name      = "allow-elastic-system"
@@ -65,6 +65,28 @@ resource "kubernetes_network_policy" "infra_network_policy_elastic_system" {
           match_labels = {
             "name" = "elastic-system"
           }
+        }
+      }
+    }
+  }
+}
+
+// Network policy for elasticsearch
+resource "kubernetes_network_policy" "infra_network_policy_elasticsearch" {
+  metadata {
+    name      = "allow-elasticsearch"
+    namespace = kubernetes_namespace.infra_ns.metadata[0].name
+  }
+  spec {
+    policy_types = ["Ingress"]
+    pod_selector {
+      match_labels = {
+        "common.k8s.elastic.co/type" = "elasticsearch"
+      }
+    }
+    ingress {
+      from {
+        namespace_selector {
         }
       }
     }
@@ -118,20 +140,6 @@ resource "helm_release" "infra_grafana" {
   set_sensitive {
     name  = "envRenderSecret.GF_DATABASE_PASSWORD"
     value = var.infra_grafana_db_password
-  }
-}
-
-// Logstash
-resource "helm_release" "infra_logstash" {
-  name       = "logstash"
-  chart     = "${path.module}/infra/charts/logstash"
-  namespace  = kubernetes_namespace.infra_ns.metadata[0].name
-
-  values = [file("${path.module}/infra/values/logstash.yaml")]
-
-  set_sensitive {
-    name  = "env.ELASTICSEARCH_PASSWORD"
-    value = var.infra_logstash_elasticsearch_password
   }
 }
 
