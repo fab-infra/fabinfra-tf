@@ -143,6 +143,15 @@ resource "helm_release" "infra_grafana" {
   }
 }
 
+// Cron jobs
+resource "helm_release" "infra_jobs" {
+  name      = "jobs"
+  chart     = "${path.module}/infra/charts/jobs"
+  namespace = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/jobs.yaml")]
+}
+
 // Mail server (outbound only)
 resource "helm_release" "infra_mailserver" {
   name      = "mailserver"
