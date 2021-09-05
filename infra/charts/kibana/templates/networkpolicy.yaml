@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-{{ include "kibana.fullname" . }}-kb-from-any-beat
+spec:
+  podSelector:
+    matchLabels:
+      common.k8s.elastic.co/type: kibana
+      kibana.k8s.elastic.co/name: {{ include "kibana.fullname" . }}
+  ingress:
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          common.k8s.elastic.co/type: beat

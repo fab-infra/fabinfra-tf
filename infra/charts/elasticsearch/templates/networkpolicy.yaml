@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-{{ include "elasticsearch.fullname" . }}-es-from-any-beat
+spec:
+  podSelector:
+    matchLabels:
+      common.k8s.elastic.co/type: elasticsearch
+      elasticsearch.k8s.elastic.co/cluster-name: {{ include "elasticsearch.fullname" . }}
+  ingress:
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          common.k8s.elastic.co/type: beat

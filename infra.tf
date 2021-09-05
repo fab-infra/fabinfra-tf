@@ -127,6 +127,15 @@ resource "helm_release" "infra_backups" {
   }
 }
 
+// Elasticsearch
+resource "helm_release" "infra_elasticsearch" {
+  name      = "elasticsearch"
+  chart     = "${path.module}/infra/charts/elasticsearch"
+  namespace = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/elasticsearch.yaml")]
+}
+
 // Cron jobs
 resource "helm_release" "infra_jobs" {
   name      = "jobs"
@@ -134,6 +143,15 @@ resource "helm_release" "infra_jobs" {
   namespace = kubernetes_namespace.infra_ns.metadata[0].name
 
   values = [file("${path.module}/infra/values/jobs.yaml")]
+}
+
+// Kibana
+resource "helm_release" "infra_kibana" {
+  name      = "kibana"
+  chart     = "${path.module}/infra/charts/kibana"
+  namespace = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/kibana.yaml")]
 }
 
 // Mail server (outbound only)

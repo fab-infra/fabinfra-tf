@@ -1,0 +1,15 @@
+fullnameOverride: kibana
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+nodeSelector:
+  server-role-infra: 'true'
+
+ingress:
+  enabled: true
+  hosts:
+    - host: "kibana.fabinfra.net"
+      paths:
+        - path: "/"

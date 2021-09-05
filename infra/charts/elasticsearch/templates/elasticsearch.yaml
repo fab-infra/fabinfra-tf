@@ -1,0 +1,61 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: {{ include "elasticsearch.fullname" . }}
+  labels:
+    {{- include "elasticsearch.labels" . | nindent 4 }}
+spec:
+  version: "{{ .Values.image.tag | default .Chart.AppVersion }}"
+  image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+  nodeSets:
+    - name: default
+      count: {{ .Values.replicaCount }}
+      config:
+        {{- toYaml .Values.config | nindent 8 }}
+      podTemplate:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: elasticsearch
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                {{- range $key, $value := .Values.env }}
+                - name: "{{ tpl $key $ }}"
+                  value: "{{ tpl (print $value) $ }}"
+                {{- end }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              volumeMounts:
+                {{- with .Values.volumes.data }}
+                - name: elasticsearch-data
+                  mountPath: /usr/share/elasticsearch/data
+                {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+            {{- with .Values.volumes.data }}
+            - name: elasticsearch-data
+              {{- toYaml . | nindent 14 }}
+            {{- end }}

@@ -1,0 +1,25 @@
+fullnameOverride: elasticsearch
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+resources:
+  requests:
+    memory: 4Gi
+    cpu: 1
+  limits:
+    memory: 4Gi
+    cpu: 4
+
+nodeSelector:
+  server-role-infra: 'true'
+
+env:
+  ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+
+volumes:
+  data:
+    hostPath:
+      path: /home/apps/elasticsearch
+      type: DirectoryOrCreate
