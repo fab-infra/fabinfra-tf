@@ -32,7 +32,6 @@ dns_records = [
   { name = "",                      ttl = 600,   type = "SPF",    target = "\"v=spf1 a:ks11.srv.fabinfra.net a:sy02.srv.fabinfra.net include:mx.ovh.com ?all\"" },
   { name = "",                      ttl = 0,     type = "TXT",    target = "\"google-site-verification=mzVqztJJ7oLUjOvVqbTzLWAspa6kfCn8nZ2DUHSsIug\"" },
   { name = "_dmarc",                ttl = 0,     type = "DMARC",  target = "v=DMARC1;p=none;rua=mailto:postmaster@fabinfra.net;" },
-  { name = "grafana",               ttl = 1800,  type = "CNAME",  target = "k8s" },
   { name = "hs11.srv",              ttl = 0,     type = "A",      target = "192.168.0.105" },
   { name = "hs12.srv",              ttl = 0,     type = "A",      target = "192.168.0.101" },
   { name = "ip",                    ttl = 0,     type = "NS",     target = "ns-aws.nono.io." },
@@ -69,14 +68,11 @@ infra_namespace = "infra"
 #infra_backups_ftp_password = "toComplete"
 #infra_backups_mysql_username = "toComplete"
 #infra_backups_mysql_password = "toComplete"
-#infra_grafana_db_password = "toComplete"
-infra_grafana_version = "6.15.0"
 #infra_mailserver_dkim_private_key = "toComplete"
 #infra_mysql_root_password = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [
-  "https://grafana.fabinfra.net/login",
   "https://k8s.fabinfra.net/",
   "https://kibana.fabinfra.net/login",
 ]

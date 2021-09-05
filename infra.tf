@@ -127,22 +127,6 @@ resource "helm_release" "infra_backups" {
   }
 }
 
-// Grafana
-resource "helm_release" "infra_grafana" {
-  name       = "grafana"
-  repository = "https://grafana.github.io/helm-charts"
-  chart      = "grafana"
-  version    = var.infra_grafana_version
-  namespace  = kubernetes_namespace.infra_ns.metadata[0].name
-
-  values = [file("${path.module}/infra/values/grafana.yaml")]
-
-  set_sensitive {
-    name  = "envRenderSecret.GF_DATABASE_PASSWORD"
-    value = var.infra_grafana_db_password
-  }
-}
-
 // Cron jobs
 resource "helm_release" "infra_jobs" {
   name      = "jobs"
