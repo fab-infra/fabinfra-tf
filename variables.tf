@@ -75,36 +75,6 @@ variable "dns_records" {
 variable "infra_namespace" {
   description = "Infra Kubernetes namespace"
 }
-variable "infra_backups_openrc" {
-  description = "OpenStack openrc file for backups"
-  sensitive   = true
-}
-variable "infra_backups_sa" {
-  description = "Google Service Account JSON key for backups"
-  sensitive   = true
-}
-variable "infra_backups_ftp_username" {
-  description = "FTP username for backups"
-}
-variable "infra_backups_ftp_password" {
-  description = "FTP password for backups"
-  sensitive   = true
-}
-variable "infra_backups_mysql_username" {
-  description = "MySQL username for backups"
-}
-variable "infra_backups_mysql_password" {
-  description = "MySQL password for backups"
-  sensitive   = true
-}
-variable "infra_mailserver_dkim_private_key" {
-  description = "DKIM private key (PEM-encoded)"
-  sensitive   = true
-}
-variable "infra_mysql_root_password" {
-  description = "MySQL root password"
-  sensitive   = true
-}
 
 // Uptime checks
 variable "uptime_check_urls" {

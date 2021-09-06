@@ -1,6 +1,0 @@
-apiVersion: v2
-name: mysql
-description: MySQL-compatible database (MariaDB)
-type: application
-version: 0.1.4
-appVersion: "10.4"

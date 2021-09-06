@@ -62,14 +62,6 @@ dns_records = [
 
 # Infra
 infra_namespace = "infra"
-#infra_backups_openrc = "toComplete"
-#infra_backups_sa = "toComplete"
-#infra_backups_ftp_username = "toComplete"
-#infra_backups_ftp_password = "toComplete"
-#infra_backups_mysql_username = "toComplete"
-#infra_backups_mysql_password = "toComplete"
-#infra_mailserver_dkim_private_key = "toComplete"
-#infra_mysql_root_password = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [
