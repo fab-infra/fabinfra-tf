@@ -4,6 +4,8 @@ controller:
   config:
     use-forwarded-headers: 'true'
     proxy-body-size: 100m
+  ingressClassResource:
+    default: true
   kind: DaemonSet
   nodeSelector:
     server-role-web: 'true'
@@ -13,3 +15,4 @@ controller:
     nodePorts:
       http: 30080
       https: 30443
+  watchIngressWithoutClass: true
