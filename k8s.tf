@@ -35,9 +35,11 @@ resource "kubernetes_cluster_role_binding" "k8s_admin_user_cluster_role_binding"
 
 // Calico Tigera operator
 resource "helm_release" "k8s_calico" {
-  name      = "calico"
-  chart     = "https://github.com/projectcalico/calico/releases/download/v${var.k8s_calico_version}/tigera-operator-v${var.k8s_calico_version}-2.tgz"
-  namespace = "kube-system"
+  name       = "calico"
+  repository = "https://docs.projectcalico.org/charts"
+  chart      = "tigera-operator"
+  version    = var.k8s_calico_version
+  namespace  = "kube-system"
 
   values = [file("${path.module}/k8s/values/calico.yaml")]
 }
