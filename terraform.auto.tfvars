@@ -16,7 +16,7 @@ k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
 #k8s_ca_cert = "toComplete"
 
 # Kubernetes config
-k8s_calico_version = "3.20.2"
+k8s_calico_version = "v3.20.2"
 k8s_dashboard_version = "5.0.4"
 k8s_elastic_operator_version = "1.8.0"
 k8s_ingress_nginx_version = "4.0.6"
@@ -29,7 +29,7 @@ dns_records = [
   { name = "",                      ttl = 0,     type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 0,     type = "MX",     target = "1 mx4.mail.ovh.net." },
   { name = "",                      ttl = 0,     type = "MX",     target = "10 mx3.mail.ovh.net." },
-  { name = "",                      ttl = 600,   type = "SPF",    target = "\"v=spf1 a:ks11.srv.fabinfra.net a:sy02.srv.fabinfra.net include:mx.ovh.com ?all\"" },
+  { name = "",                      ttl = 600,   type = "SPF",    target = "\"v=spf1 a:ks11.srv.fabinfra.net a:sy02.srv.fabinfra.net a:sy03.srv.fabinfra.net include:mx.ovh.com ?all\"" },
   { name = "",                      ttl = 0,     type = "TXT",    target = "\"google-site-verification=mzVqztJJ7oLUjOvVqbTzLWAspa6kfCn8nZ2DUHSsIug\"" },
   { name = "",                      ttl = 0,     type = "TXT",    target = "\"google-site-verification=VuA2XEeHY7Zyt31h9kZ4J6iwat6NrQFDowZr5JmKjQg\"" },
   { name = "_dmarc",                ttl = 0,     type = "DMARC",  target = "v=DMARC1;p=none;rua=mailto:postmaster@fabinfra.net;" },
@@ -39,8 +39,10 @@ dns_records = [
   { name = "ip",                    ttl = 0,     type = "NS",     target = "ns-gce.nono.io." },
   { name = "ipv4.ks11.srv",         ttl = 0,     type = "A",      target = "37.187.118.231" },
   { name = "ipv4.sy02.srv",         ttl = 0,     type = "A",      target = "5.39.85.174" },
+  { name = "ipv4.sy03.srv",         ttl = 0,     type = "A",      target = "51.255.79.178" },
   { name = "ipv6.ks11.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:a:6be7::1" },
   { name = "ipv6.sy02.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:8:97ae::1" },
+  { name = "ipv6.sy03.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
   { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "sy02.srv" },
   { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "sy02.srv" },
   { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "sy02.vpn" },
@@ -58,6 +60,10 @@ dns_records = [
   { name = "sy02.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:8:97ae::1" },
   { name = "sy02.srv",              ttl = 600,   type = "SPF",    target = "\"v=spf1 a -all\"" },
   { name = "sy02.vpn",              ttl = 0,     type = "A",      target = "10.8.2.114" },
+  { name = "sy03.srv",              ttl = 0,     type = "A",      target = "51.255.79.178" },
+  { name = "sy03.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
+  { name = "sy03.srv",              ttl = 600,   type = "SPF",    target = "\"v=spf1 a -all\"" },
+  { name = "sy03.vpn",              ttl = 0,     type = "A",      target = "10.8.2.110" },
   { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks11.srv" },
 ]
 
