@@ -1,0 +1,9 @@
+clusterIssuer:
+  acme:
+    email: webmaster@fabinfra.net
+    http01:
+      ingress:
+        podTemplate:
+          spec:
+            nodeSelector:
+              server-role-web: 'true'

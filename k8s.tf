@@ -65,6 +65,15 @@ resource "helm_release" "k8s_certmanager" {
   values = [file("${path.module}/k8s/values/cert-manager.yaml")]
 }
 
+// Cert-manager configuratrion
+resource "helm_release" "k8s_certmanager_config" {
+  name       = "cert-manager-config"
+  chart      = "${path.module}/k8s/charts/cert-manager-config"
+  namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
+
+  values = [file("${path.module}/k8s/values/cert-manager-config.yaml")]
+}
+
 // Dashboard namespace
 resource "kubernetes_namespace" "k8s_dashboard_ns" {
   metadata {

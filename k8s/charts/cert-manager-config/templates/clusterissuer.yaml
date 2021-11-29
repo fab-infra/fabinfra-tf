@@ -1,0 +1,52 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned
+  labels:
+    {{- include "certmanagerConfig.labels" . | nindent 4 }}
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+  labels:
+    {{- include "certmanagerConfig.labels" . | nindent 4 }}
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    {{- if .Values.clusterIssuer.acme.email }}
+    email: {{ .Values.clusterIssuer.acme.email }}
+    {{- end }}
+    privateKeySecretRef:
+      name: letsencrypt-staging-account-key
+    solvers:
+    - http01:
+        ingress:
+          podTemplate:
+            {{- toYaml .Values.clusterIssuer.acme.http01.ingress.podTemplate | nindent 12 }}
+          ingressTemplate:
+            {{- toYaml .Values.clusterIssuer.acme.http01.ingress.ingressTemplate | nindent 12 }}
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  labels:
+    {{- include "certmanagerConfig.labels" . | nindent 4 }}
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    {{- if .Values.clusterIssuer.acme.email }}
+    email: {{ .Values.clusterIssuer.acme.email }}
+    {{- end }}
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+    - http01:
+        ingress:
+          podTemplate:
+            {{- toYaml .Values.clusterIssuer.acme.http01.ingress.podTemplate | nindent 12 }}
+          ingressTemplate:
+            {{- toYaml .Values.clusterIssuer.acme.http01.ingress.ingressTemplate | nindent 12 }}
