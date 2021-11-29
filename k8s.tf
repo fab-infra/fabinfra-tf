@@ -44,6 +44,27 @@ resource "helm_release" "k8s_calico" {
   values = [file("${path.module}/k8s/values/calico.yaml")]
 }
 
+// Cert-manager namespace
+resource "kubernetes_namespace" "k8s_certmanager_ns" {
+  metadata {
+    name = "cert-manager"
+    labels = {
+      "name" = "cert-manager"
+    }
+  }
+}
+
+// Cert-manager
+resource "helm_release" "k8s_certmanager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  version    = var.k8s_certmanager_version
+  namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
+
+  values = [file("${path.module}/k8s/values/cert-manager.yaml")]
+}
+
 // Dashboard namespace
 resource "kubernetes_namespace" "k8s_dashboard_ns" {
   metadata {

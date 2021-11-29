@@ -1,0 +1,2 @@
+nodeSelector:
+  server-role-web: 'true'

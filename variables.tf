@@ -46,6 +46,9 @@ variable "k8s_ca_cert" {
 variable "k8s_calico_version" {
   description = "Calico Helm chart version"
 }
+variable "k8s_certmanager_version" {
+  description = "Cert-manager Helm chart version"
+}
 variable "k8s_dashboard_version" {
   description = "Kubernetes Dashboard Helm chart version"
 }
