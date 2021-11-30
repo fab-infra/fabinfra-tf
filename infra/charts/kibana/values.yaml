@@ -26,6 +26,10 @@ ingress:
   hosts:
     - host: example.org
       paths: []
+  tls: []
+  #  - secretName: example-tls
+  #    hosts:
+  #      - example.org
 
 nodeSelector:
   server-role-infra: "true"

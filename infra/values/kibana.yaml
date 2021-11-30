@@ -9,7 +9,14 @@ nodeSelector:
 
 ingress:
   enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
   hosts:
     - host: "kibana.fabinfra.net"
       paths:
         - path: "/"
+  tls:
+    - secretName: kibana-tls
+      hosts:
+        - "kibana.fabinfra.net"
