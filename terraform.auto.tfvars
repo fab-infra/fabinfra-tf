@@ -25,7 +25,7 @@ k8s_ingress_nginx_version = "4.0.6"
 # DNS records
 dns_zone = "fabinfra.net"
 dns_records = [
-  { name = "",                      ttl = 0,     type = "A",      target = "5.39.85.174" },
+  { name = "",                      ttl = 0,     type = "A",      target = "51.255.79.178" },
   { name = "",                      ttl = 0,     type = "AAAA",   target = "2001:41d0:8:97ae::1" },
   { name = "",                      ttl = 0,     type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 0,     type = "MX",     target = "1 mx4.mail.ovh.net." },
@@ -44,8 +44,8 @@ dns_records = [
   { name = "ipv6.ks11.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:a:6be7::1" },
   { name = "ipv6.sy02.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:8:97ae::1" },
   { name = "ipv6.sy03.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
-  { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "sy02.srv" },
-  { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "sy02.srv" },
+  { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "sy03.srv" },
+  { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "sy03.srv" },
   { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "sy02.vpn" },
   { name = "kibana",                ttl = 1800,  type = "CNAME",  target = "k8s" },
   { name = "ks11.srv",              ttl = 0,     type = "A",      target = "37.187.118.231" },
