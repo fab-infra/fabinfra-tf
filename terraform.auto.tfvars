@@ -46,7 +46,7 @@ dns_records = [
   { name = "ipv6.sy03.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
   { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "sy03.srv" },
   { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "sy03.srv" },
-  { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "sy02.vpn" },
+  { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "sy03.vpn" },
   { name = "kibana",                ttl = 1800,  type = "CNAME",  target = "k8s" },
   { name = "ks11.srv",              ttl = 0,     type = "A",      target = "37.187.118.231" },
   { name = "ks11.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:a:6be7::1" },
