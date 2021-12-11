@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install monitoring agent
-curl -sS https://dl.google.com/cloudagents/install-monitoring-agent.sh | bash -s
+curl -sS https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh | bash -s -- --also-install
 
 # Install packages
 apt-get update
