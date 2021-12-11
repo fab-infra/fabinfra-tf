@@ -133,4 +133,9 @@ resource "helm_release" "k8s_ingress_nginx" {
   namespace  = kubernetes_namespace.k8s_ingress_nginx_ns.metadata[0].name
 
   values = [file("${path.module}/k8s/values/ingress-nginx.yaml")]
+
+  set {
+    name  = "controller.service.externalIPs"
+    value = "{${join(",", var.k8s_ingress_nginx_external_ips)}}"
+  }
 }

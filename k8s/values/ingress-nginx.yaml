@@ -16,7 +16,4 @@ controller:
     nodePorts:
       http: 30080
       https: 30443
-    externalIPs:
-      - 5.39.85.174
-      - 51.255.79.178
   watchIngressWithoutClass: true
