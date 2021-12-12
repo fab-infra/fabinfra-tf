@@ -8,7 +8,7 @@ image:
   repository: docker.elastic.co/kibana/kibana
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 7.14.1
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
