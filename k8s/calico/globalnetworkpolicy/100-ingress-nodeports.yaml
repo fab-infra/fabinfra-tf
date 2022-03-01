@@ -8,6 +8,24 @@ spec:
   preDNAT: true
   applyOnForward: true
   ingress:
+  # Allow traffic to NodePorts (TCP) from trusted clients
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: trusted-clients == 'true'
+    destination:
+      selector: has(kubernetes-host)
+      ports:
+      - "30000:32767"
+  # Allow traffic to NodePorts (UDP) from trusted clients
+  - action: Allow
+    protocol: UDP
+    source:
+      selector: trusted-clients == 'true'
+    destination:
+      selector: has(kubernetes-host)
+      ports:
+      - "30000:32767"
   # Deny traffic to NodePorts (TCP)
   - action: Deny
     protocol: TCP
