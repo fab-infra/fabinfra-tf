@@ -16,6 +16,7 @@ ingress:
     - host: "kibana.fabinfra.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
   tls:
     - secretName: kibana-tls
       hosts:
