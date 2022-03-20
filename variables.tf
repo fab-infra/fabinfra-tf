@@ -59,7 +59,7 @@ variable "k8s_ingress_nginx_version" {
   description = "Ingress Nginx Helm chart version"
 }
 variable "k8s_ingress_nginx_external_ips" {
-  type = list(string)
+  type        = list(string)
   description = "Ingress Nginx external IPs list"
 }
 
@@ -81,6 +81,13 @@ variable "dns_records" {
 // Infra
 variable "infra_namespace" {
   description = "Infra Kubernetes namespace"
+}
+variable "infra_promtail_loki_address" {
+  description = "Promtail Loki address (e.g. https://username:password@loki-gateway/api/prom/push)"
+  sensitive   = true
+}
+variable "infra_promtail_version" {
+  description = "Promtail Helm chart version"
 }
 
 // Uptime checks
