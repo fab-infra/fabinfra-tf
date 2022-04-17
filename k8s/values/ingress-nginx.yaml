@@ -10,6 +10,10 @@ controller:
   kind: DaemonSet
   nodeSelector:
     server-role-web: 'true'
+  tolerations:
+    - key: dedicated-server
+      operator: Exists
+      effect: NoSchedule
   service:
     externalTrafficPolicy: Local
     type: NodePort
