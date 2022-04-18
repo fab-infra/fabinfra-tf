@@ -1,0 +1,18 @@
+{{- range .Values.clusterIssuer.ca.intermediate }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "certmanagerConfig.labels" $ | nindent 4 }}
+spec:
+  secretName: {{ .name }}-tls
+  commonName: {{ .cn | default .name }}
+  duration: 87600h # 10y
+  renewBefore: 720h # 30d
+  isCA: true
+  issuerRef:
+    name: {{ $.Values.clusterIssuer.ca.root.name }}
+    kind: ClusterIssuer
+---
+{{- end }}

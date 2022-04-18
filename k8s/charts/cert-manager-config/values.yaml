@@ -12,3 +12,13 @@ clusterIssuer:
       ingress:
         podTemplate: {}
         ingressTemplate: {}
+  ca:
+    root:
+      name: fcprod-root-ca
+      # crt: toComplete
+      # key: toComplete
+    intermediate:
+      - name: fabinfra-staging-ca1
+        cn: FabInfra Staging CA1
+      - name: fabinfra-prod-ca1
+        cn: FabInfra Production CA1

@@ -72,6 +72,15 @@ resource "helm_release" "k8s_certmanager_config" {
   namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
 
   values = [file("${path.module}/k8s/values/cert-manager-config.yaml")]
+
+  set_sensitive {
+    name  = "clusterIssuer.ca.root.crt"
+    value = var.k8s_certmanager_root_ca_crt
+  }
+  set_sensitive {
+    name  = "clusterIssuer.ca.root.key"
+    value = var.k8s_certmanager_root_ca_key
+  }
 }
 
 // Dashboard namespace

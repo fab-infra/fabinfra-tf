@@ -50,3 +50,28 @@ spec:
             {{- toYaml .Values.clusterIssuer.acme.http01.ingress.podTemplate | nindent 12 }}
           ingressTemplate:
             {{- toYaml .Values.clusterIssuer.acme.http01.ingress.ingressTemplate | nindent 12 }}
+---
+{{- if .Values.clusterIssuer.ca.root }}
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ .Values.clusterIssuer.ca.root.name }}
+  labels:
+    {{- include "certmanagerConfig.labels" . | nindent 4 }}
+spec:
+  ca:
+    secretName: {{ .Values.clusterIssuer.ca.root.name }}-tls
+---
+{{- range .Values.clusterIssuer.ca.intermediate }}
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "certmanagerConfig.labels" $ | nindent 4 }}
+spec:
+  ca:
+    secretName: {{ .name }}-tls
+---
+{{- end }}
+{{- end }}

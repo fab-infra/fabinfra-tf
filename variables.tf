@@ -49,6 +49,14 @@ variable "k8s_calico_version" {
 variable "k8s_certmanager_version" {
   description = "Cert-manager Helm chart version"
 }
+variable "k8s_certmanager_root_ca_crt" {
+  description = "Root CA certificate (PEM-encoded)"
+  sensitive   = true
+}
+variable "k8s_certmanager_root_ca_key" {
+  description = "Root CA key (PEM-encoded)"
+  sensitive   = true
+}
 variable "k8s_dashboard_version" {
   description = "Kubernetes Dashboard Helm chart version"
 }
