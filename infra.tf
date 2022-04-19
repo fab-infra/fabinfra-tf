@@ -93,6 +93,15 @@ resource "kubernetes_network_policy" "infra_network_policy_elasticsearch" {
   }
 }
 
+// Certificates
+resource "helm_release" "infra_certificates" {
+  name      = "certificates"
+  chart     = "${path.module}/infra/charts/certificates"
+  namespace = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/certificates.yaml")]
+}
+
 // Elasticsearch
 resource "helm_release" "infra_elasticsearch" {
   name      = "elasticsearch"

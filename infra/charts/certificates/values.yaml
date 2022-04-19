@@ -1,0 +1,16 @@
+# Default values for certificates.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+certificates: []
+  # - name: example
+  #   cn: example.org
+  #   dnsNames:
+  #     - example.org
+  #     - www.example.org
+  #   issuerRef:
+  #     name: letsencrypt-prod
+  #     kind: ClusterIssuer

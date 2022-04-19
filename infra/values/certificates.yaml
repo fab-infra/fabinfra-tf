@@ -1,0 +1,100 @@
+fullnameOverride: certificates
+
+certificates:
+  # VPN servers
+  - name: ks11
+    cn: ks11.srv.fabinfra.net
+    dnsNames:
+      - ks11.srv.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - server auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  # VPN clients (servers)
+  - name: od01
+    cn: od01.srv.fabinfra.net
+    dnsNames:
+      - od01.srv.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: rb04
+    cn: rb04.srv.fabinfra.net
+    dnsNames:
+      - rb04.srv.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: sy03
+    cn: sy03.srv.fabinfra.net
+    dnsNames:
+      - sy03.srv.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  # VPN clients (devices)
+  - name: fab-precision7530
+    dnsNames:
+      - fab-precision7530.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: fab-laptop
+    dnsNames:
+      - fab-laptop.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: fab-iphone8
+    dnsNames:
+      - fab-iphone8.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: fab-gtabs2
+    dnsNames:
+      - fab-gtabs2.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: jean-laptop
+    dnsNames:
+      - jean-laptop.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer

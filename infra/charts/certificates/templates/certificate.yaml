@@ -1,0 +1,28 @@
+{{- range .Values.certificates }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "certificates.labels" $ | nindent 4 }}
+spec:
+  secretName: {{ .name }}-tls
+  commonName: {{ .cn | default .name }}
+  duration: {{ .duration | default "8760h" }}
+  renewBefore: {{ .renewBefore | default "360h" }}
+  {{- if .dnsNames }}
+  dnsNames:
+    {{- toYaml .dnsNames | nindent 4 }}
+  {{- end }}
+  {{- if .emailAddresses }}
+  emailAddresses:
+    {{- toYaml .emailAddresses | nindent 4 }}
+  {{- end }}
+  {{- if .usages }}
+  usages:
+    {{- toYaml .usages | nindent 4 }}
+  {{- end }}
+  issuerRef:
+    {{- toYaml .issuerRef | nindent 4 }}
+---
+{{- end }}
