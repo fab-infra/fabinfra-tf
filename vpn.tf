@@ -145,6 +145,6 @@ resource "ovh_domain_zone_record" "vpn_dns_record" {
   zone      = var.dns_zone
   subdomain = "vpn-${each.value}"
   fieldtype = "A"
-  ttl       = 0
+  ttl       = 300
   target    = google_compute_address.vpn_ip[each.key].address
 }
