@@ -13,6 +13,17 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
+  - name: vpn-server
+    cn: vpn-server
+    dnsNames:
+      - vpn.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - server auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
   # VPN clients (servers)
   - name: od01
     cn: od01.srv.fabinfra.net
@@ -91,6 +102,16 @@ certificates:
   - name: jean-laptop
     dnsNames:
       - jean-laptop.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: del-laptop
+    dnsNames:
+      - del-laptop.home.crespel.me
     usages:
       - digital signature
       - key encipherment
