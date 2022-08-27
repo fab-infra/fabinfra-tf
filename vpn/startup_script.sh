@@ -4,8 +4,8 @@
 curl -sS https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh | bash -s -- --also-install
 
 # Install packages
-apt-get update
-apt-get install -y firewalld openvpn
+apt-get -q update
+DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends firewalld openvpn
 
 # Enable IP forwarding
 sed -i 's/^#net.ipv4.ip_forward=.*/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
@@ -15,6 +15,7 @@ sysctl -p --system
 systemctl enable firewalld
 systemctl start firewalld
 firewall-cmd --permanent --zone=public --add-interface=eth0
+firewall-cmd --permanent --zone=public --add-interface=ens4
 firewall-cmd --permanent --zone=public --add-service=https
 firewall-cmd --permanent --zone=public --add-port=1194/tcp
 firewall-cmd --permanent --zone=public --add-forward-port=port=443:proto=tcp:toport=1194
