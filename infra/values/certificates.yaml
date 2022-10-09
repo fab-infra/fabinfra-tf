@@ -69,16 +69,6 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
-  - name: fab-laptop
-    dnsNames:
-      - fab-laptop.home.crespel.me
-    usages:
-      - digital signature
-      - key encipherment
-      - client auth
-    issuerRef:
-      name: fabinfra-prod-ca1
-      kind: ClusterIssuer
   - name: fab-iphone8
     dnsNames:
       - fab-iphone8.home.crespel.me
