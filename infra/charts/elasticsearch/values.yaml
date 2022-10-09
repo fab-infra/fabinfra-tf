@@ -47,9 +47,7 @@ tolerations: []
 affinity: {}
 
 config:
-  node.master: true
-  node.data: true
-  node.ingest: true
+  node.roles: ["master", "data", "ingest", "transform"]
 
 env: {}
   # ES_JAVA_OPTS: "-Xms2g -Xmx2g"

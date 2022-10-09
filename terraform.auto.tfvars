@@ -21,7 +21,7 @@ k8s_certmanager_version = "v1.8.0"
 # k8s_certmanager_root_ca_crt = "toComplete"
 # k8s_certmanager_root_ca_key = "toComplete"
 k8s_dashboard_version = "5.4.1"
-k8s_elastic_operator_version = "2.1.0"
+k8s_elastic_operator_version = "2.4.0"
 k8s_ingress_nginx_version = "4.0.19"
 k8s_ingress_nginx_external_ips = ["37.187.118.231", "51.255.79.178"]
 
