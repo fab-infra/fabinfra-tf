@@ -48,6 +48,7 @@ affinity: {}
 
 config:
   node.roles: ["master", "data", "ingest", "transform"]
+  path.repo: ["/usr/share/elasticsearch/repo"]
 
 env: {}
   # ES_JAVA_OPTS: "-Xms2g -Xmx2g"
@@ -55,5 +56,9 @@ env: {}
 volumes:
   data: {}
     # hostPath:
-    #   path: /home/domains/example.org/elasticsearch
+    #   path: /home/domains/example.org/elasticsearch/data
+    #   type: DirectoryOrCreate
+  repo: {}
+    # hostPath:
+    #   path: /home/domains/example.org/elasticsearch/repo
     #   type: DirectoryOrCreate

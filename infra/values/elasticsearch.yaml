@@ -21,5 +21,9 @@ env:
 volumes:
   data:
     hostPath:
-      path: /home/apps/elasticsearch
+      path: /home/apps/elasticsearch/data
+      type: DirectoryOrCreate
+  repo:
+    hostPath:
+      path: /home/apps/elasticsearch/repo
       type: DirectoryOrCreate

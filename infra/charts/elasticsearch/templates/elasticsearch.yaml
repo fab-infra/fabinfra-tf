@@ -42,6 +42,10 @@ spec:
                 - name: elasticsearch-data
                   mountPath: /usr/share/elasticsearch/data
                 {{- end }}
+                {{- with .Values.volumes.repo }}
+                - name: elasticsearch-repo
+                  mountPath: /usr/share/elasticsearch/repo
+                {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
@@ -57,5 +61,9 @@ spec:
           volumes:
             {{- with .Values.volumes.data }}
             - name: elasticsearch-data
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.volumes.repo }}
+            - name: elasticsearch-repo
               {{- toYaml . | nindent 14 }}
             {{- end }}
