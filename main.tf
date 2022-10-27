@@ -30,3 +30,12 @@ provider "helm" {
     cluster_ca_certificate = base64decode(var.k8s_ca_cert)
   }
 }
+
+// Google billing email notification channel
+resource "google_monitoring_notification_channel" "billing_notification_channel_email" {
+  display_name = "Billing notification channel (email)"
+  type         = "email"
+  labels = {
+    email_address = var.gcp_billing_notification_email
+  }
+}

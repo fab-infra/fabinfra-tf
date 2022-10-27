@@ -8,6 +8,7 @@ ovh_endpoint = "ovh-eu"
 #gcp_credentials = "toComplete"
 gcp_project_id = "fabinfra-net"
 gcp_region = "europe-west1"
+gcp_billing_notification_email = "webmaster@fabinfra.net"
 
 # Kubernetes provider
 k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"

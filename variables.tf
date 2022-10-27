@@ -26,6 +26,9 @@ variable "gcp_project_id" {
 variable "gcp_region" {
   description = "GCP region"
 }
+variable "gcp_billing_notification_email" {
+  description = "GCP billing notification email address"
+}
 
 // Kubernetes provider
 variable "k8s_host" {
