@@ -72,10 +72,10 @@ infra_namespace = "infra"
 infra_promtail_version = "3.11.0"
 
 # Uptime checks
-uptime_check_urls = [
-  "https://k8s.fabinfra.net/",
-  "https://kibana.fabinfra.net/login",
-]
+#uptime_check_urls = [
+#  "https://k8s.fabinfra.net/",
+#  "https://kibana.fabinfra.net/login",
+#]
 uptime_check_notification_email = "webmaster@fabinfra.net"
 
 # VPN
