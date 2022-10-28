@@ -12,7 +12,7 @@ resource "grafana_synthetic_monitoring_check" "sm_http_check" {
   alert_sensitivity = "medium"
   probes = [
     data.grafana_synthetic_monitoring_probes.sm_probes.probes.Paris,
-    data.grafana_synthetic_monitoring_probes.sm_probes.probes.NewYork
+    data.grafana_synthetic_monitoring_probes.sm_probes.probes.Amsterdam
   ]
   labels = {
     domain = replace(each.value, "/(^https?://[^.]+\\.|/.*$)/", "")
