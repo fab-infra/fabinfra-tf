@@ -13,6 +13,14 @@ provider "google" {
   region      = var.gcp_region
 }
 
+// Grafana provider
+provider "grafana" {
+  url             = var.grafana_url
+  auth            = var.grafana_auth
+  sm_url          = var.grafana_sm_url
+  sm_access_token = var.grafana_sm_access_token
+}
+
 // Kubernetes provider
 provider "kubernetes" {
   host                   = var.k8s_host

@@ -10,6 +10,12 @@ gcp_project_id = "fabinfra-net"
 gcp_region = "europe-west1"
 gcp_billing_notification_email = "webmaster@fabinfra.net"
 
+# Grafana provider
+grafana_url = "https://fabinfra.grafana.net/"
+#grafana_auth = "toComplete"
+grafana_sm_url = "https://synthetic-monitoring-api.grafana.net"
+#grafana_sm_access_token = "toComplete"
+
 # Kubernetes provider
 k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
 #k8s_client_cert = "toComplete"
@@ -73,11 +79,10 @@ infra_namespace = "infra"
 infra_promtail_version = "3.11.0"
 
 # Uptime checks
-#uptime_check_urls = [
-#  "https://k8s.fabinfra.net/",
-#  "https://kibana.fabinfra.net/login",
-#]
-uptime_check_notification_email = "webmaster@fabinfra.net"
+uptime_check_urls = [
+ "https://k8s.fabinfra.net/",
+ "https://kibana.fabinfra.net/login",
+]
 
 # VPN
 vpn_machine_type = "e2-micro"

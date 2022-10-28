@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/google"
       version = "~> 3.0"
     }
+    grafana = {
+      source = "grafana/grafana"
+      version = "~> 1.30"
+    }
     kubernetes = {
       source = "hashicorp/kubernetes"
       version = "~> 2.0"

@@ -30,6 +30,22 @@ variable "gcp_billing_notification_email" {
   description = "GCP billing notification email address"
 }
 
+// Grafana provider
+variable "grafana_url" {
+  description = "Grafana URL"
+}
+variable "grafana_auth" {
+  description = "Grafana API key"
+  sensitive   = true
+}
+variable "grafana_sm_url" {
+  description = "Grafana Synthetic Monitoring URL"
+}
+variable "grafana_sm_access_token" {
+  description = "Grafana Synthetic Monitoring access token"
+  sensitive   = true
+}
+
 // Kubernetes provider
 variable "k8s_host" {
   description = "Kubernetes master host name"
@@ -106,9 +122,6 @@ variable "uptime_check_urls" {
   default     = []
   type        = list(string)
   description = "Uptime check HTTPS URLs"
-}
-variable "uptime_check_notification_email" {
-  description = "Uptime check notification email address"
 }
 
 // VPN
