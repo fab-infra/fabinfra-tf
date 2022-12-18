@@ -24,7 +24,7 @@ spec:
   - action: Allow
     protocol: TCP
     source:
-      selector: has(node-role.kubernetes.io/master)
+      selector: has(node-role.kubernetes.io/control-plane)
     destination:
       ports:
       - 10250 # kubelet
