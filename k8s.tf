@@ -33,13 +33,23 @@ resource "kubernetes_cluster_role_binding" "k8s_admin_user_cluster_role_binding"
   }
 }
 
+// Calico Tigera operator namespace
+resource "kubernetes_namespace" "k8s_calico_ns" {
+  metadata {
+    name = "tigera-operator"
+    labels = {
+      "name" = "tigera-operator"
+    }
+  }
+}
+
 // Calico Tigera operator
 resource "helm_release" "k8s_calico" {
   name       = "calico"
   repository = "https://docs.projectcalico.org/charts"
   chart      = "tigera-operator"
   version    = var.k8s_calico_version
-  namespace  = "kube-system"
+  namespace  = "tigera-operator"
 
   values = [file("${path.module}/k8s/values/calico.yaml")]
 }
