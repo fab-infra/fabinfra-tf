@@ -25,6 +25,17 @@ certificates:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
   # VPN clients (servers)
+  - name: ks13
+    cn: ks13.srv.fabinfra.net
+    dnsNames:
+      - ks13.srv.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
   - name: od01
     cn: od01.srv.fabinfra.net
     dnsNames:
