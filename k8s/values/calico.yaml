@@ -8,4 +8,4 @@ installation:
       nodeSelector: all()
     nodeAddressAutodetectionV4:
       firstFound: false
-      interface: eth.*
+      interface: "(eth|eno).*"
