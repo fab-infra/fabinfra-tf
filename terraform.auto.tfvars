@@ -35,8 +35,8 @@ k8s_ingress_nginx_external_ips = ["37.187.118.231", "51.255.79.178", "5.39.85.11
 # DNS records
 dns_zone = "fabinfra.net"
 dns_records = [
-  { name = "",                      ttl = 0,     type = "A",      target = "51.255.79.178" },
-  { name = "",                      ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
+  { name = "",                      ttl = 0,     type = "A",      target = "5.39.85.118" },
+  { name = "",                      ttl = 0,     type = "AAAA",   target = "2001:41d0:8:9776::1" },
   { name = "",                      ttl = 0,     type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 0,     type = "MX",     target = "1 mx4.mail.ovh.net." },
   { name = "",                      ttl = 0,     type = "MX",     target = "10 mx3.mail.ovh.net." },
@@ -54,10 +54,11 @@ dns_records = [
   { name = "ipv6.ks11.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:a:6be7::1" },
   { name = "ipv6.ks13.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:8:9776::1" },
   { name = "ipv6.sy03.srv",         ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
-  { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "ipv4.sy03.srv" },
-  { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "ipv4.sy03.srv" },
-  { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "sy03.vpn" },
-  { name = "kibana",                ttl = 1800,  type = "CNAME",  target = "k8s" },
+  { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "k8s-ingress" },
+  { name = "k8s-ingress",           ttl = 1800,  type = "CNAME",  target = "ipv4.ks13.srv" },
+  { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "ipv4.ks13.srv" },
+  { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "ks13.vpn" },
+  { name = "kibana",                ttl = 1800,  type = "CNAME",  target = "k8s-ingress" },
   { name = "ks11.srv",              ttl = 0,     type = "A",      target = "37.187.118.231" },
   { name = "ks11.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:a:6be7::1" },
   { name = "ks11.srv",              ttl = 600,   type = "SPF",    target = "\"v=spf1 a -all\"" },
