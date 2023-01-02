@@ -13,6 +13,17 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
+  - name: ks14
+    cn: ks14.srv.fabinfra.net
+    dnsNames:
+      - ks14.srv.fabinfra.net
+    usages:
+      - digital signature
+      - key encipherment
+      - server auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
   - name: vpn-server
     cn: vpn-server
     dnsNames:
