@@ -69,17 +69,6 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
-  - name: sy03
-    cn: sy03.srv.fabinfra.net
-    dnsNames:
-      - sy03.srv.fabinfra.net
-    usages:
-      - digital signature
-      - key encipherment
-      - client auth
-    issuerRef:
-      name: fabinfra-prod-ca1
-      kind: ClusterIssuer
   # VPN clients (devices)
   - name: fab-precision7530
     dnsNames:
