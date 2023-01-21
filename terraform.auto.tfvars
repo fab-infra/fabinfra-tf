@@ -72,7 +72,7 @@ dns_records = [
   { name = "ks14.srv",              ttl = 0,     type = "A",      target = "5.196.89.22" },
   { name = "ks14.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:a:fc16::1" },
   { name = "ks14.srv",              ttl = 600,   type = "SPF",    target = "\"v=spf1 a -all\"" },
-  { name = "ks14.vpn",              ttl = 0,     type = "A",      target = "10.8.2.130" },
+  { name = "ks14.vpn",              ttl = 0,     type = "A",      target = "10.8.2.1" },
   { name = "march2016._domainkey",  ttl = 0,     type = "DKIM",   target = "k=rsa;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwvjrMuYA4hkI0TMzk6h4Hec06Unn/qZUxf4YnR5OWkCYrlIJZXuOUIsYZMXTiXCEhPdO6JktOcdVcUyB8UdhGLv7PoMShG+Kb9zsfqOtLJ3dfzJuaBsoV0BEi4yLqXPTNqbzE4YtxynC11MfPrtxwIYmJ5p4S2RMztBTZC5g/1PoQ2UWk/NphEzO6iA4Bbtas1OD+44Moa1OYMbi3YZrmEn1WTfrWodunAYE92Usoj+kpSiBqhYPS/r8iQMOsRZOznDZhxG7VIYGU5xq+Ah0hpWoU/Nvs79LBP0pgC7vyCRXec18Q7Ix3t7WaYOZv5/GfhbcWREM0wVAsEQYjVp9cwIDAQAB;t=s;" },
   { name = "od01.srv",              ttl = 0,     type = "A",      target = "192.168.0.122" },
   { name = "od01.vpn",              ttl = 0,     type = "A",      target = "10.8.2.126" },
@@ -83,7 +83,7 @@ dns_records = [
   { name = "sy03.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
   { name = "sy03.srv",              ttl = 600,   type = "SPF",    target = "\"v=spf1 a -all\"" },
   { name = "sy03.vpn",              ttl = 0,     type = "A",      target = "10.8.2.110" },
-  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks11.srv" },
+  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks14.srv" },
 ]
 
 # Infra
