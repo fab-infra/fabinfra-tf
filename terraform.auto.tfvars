@@ -17,7 +17,7 @@ grafana_sm_url = "https://synthetic-monitoring-api.grafana.net"
 #grafana_sm_access_token = "toComplete"
 
 # Kubernetes provider
-k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
+k8s_host = "https://k8s-master.fabinfra.net:6443"
 #k8s_client_cert = "toComplete"
 #k8s_client_key = "toComplete"
 #k8s_ca_cert = "toComplete"

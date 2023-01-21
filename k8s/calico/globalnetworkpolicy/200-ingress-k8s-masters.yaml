@@ -15,6 +15,12 @@ spec:
     destination:
       ports:
       - 22
+  # Allow traffic to API server
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 6443
   # Allow traffic to localhost
   - action: Allow
     destination:
