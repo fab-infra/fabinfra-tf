@@ -18,7 +18,7 @@ The main underlying provider is currently [OVH](https://www.ovh.com). Some resou
 
 ## Deployment
 
-For development and deployment, download and install [Terraform CLI](https://www.terraform.io/downloads.html) version 0.14 or higher.
+For development and deployment, download and install [Terraform CLI](https://www.terraform.io/downloads.html) version 1.0 or higher.
 
 Create a `terraform.tfvars` file to customize sensitive variables marked as `"toComplete"` in `terrafom.auto.tfvars`. See `variables.tf` for more information.
 
@@ -34,4 +34,4 @@ terraform plan
 terraform apply
 ```
 
-The Terraform state is stored in a [Terraform Cloud](https://app.terraform.io/app/fcrespel/workspaces/fabinfra-tf) workspace.
+The Terraform state is stored in a [Terraform Cloud](https://app.terraform.io/app/fabinfra/workspaces/fabinfra-tf) workspace.
