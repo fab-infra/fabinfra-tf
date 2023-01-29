@@ -83,7 +83,7 @@ dns_records = [
   { name = "sy03.srv",              ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
   { name = "sy03.srv",              ttl = 600,   type = "SPF",    target = "\"v=spf1 a -all\"" },
   { name = "sy03.vpn",              ttl = 0,     type = "A",      target = "10.8.2.110" },
-  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks14.srv" },
+  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks13.srv" },
 ]
 
 # Infra
