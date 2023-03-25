@@ -29,7 +29,7 @@ resource "ovh_domain_zone_record" "dns_gcp_ns_records" {
   zone      = var.dns_zone
   subdomain = "gcp"
   fieldtype = "NS"
-  ttl       = 0
+  ttl       = 3600
   target    = each.value
 }
 
