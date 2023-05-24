@@ -19,7 +19,7 @@ resource "google_compute_instance" "vpn_instance" {
 
     access_config {
       nat_ip       = google_compute_address.vpn_ip[each.key].address
-      network_tier = "STANDARD"
+      network_tier = "PREMIUM"
     }
   }
 
@@ -39,7 +39,7 @@ resource "google_compute_address" "vpn_ip" {
   name         = "vpn-ip-${each.value}"
   region       = replace(each.value, "/-[^-]+$/", "")
   address_type = "EXTERNAL"
-  network_tier = "STANDARD"
+  network_tier = "PREMIUM"
 }
 
 // Startup script
