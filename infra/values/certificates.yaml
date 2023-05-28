@@ -58,9 +58,9 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
-  - name: fab-iphone8
+  - name: fab-iphone
     dnsNames:
-      - fab-iphone8.home.crespel.me
+      - fab-iphone.home.crespel.me
     usages:
       - digital signature
       - key encipherment
