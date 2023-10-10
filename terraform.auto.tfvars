@@ -44,6 +44,7 @@ dns_records = [
   { name = "",                      ttl = 300,   type = "TXT",    target = "\"google-site-verification=mzVqztJJ7oLUjOvVqbTzLWAspa6kfCn8nZ2DUHSsIug\"" },
   { name = "",                      ttl = 300,   type = "TXT",    target = "\"google-site-verification=VuA2XEeHY7Zyt31h9kZ4J6iwat6NrQFDowZr5JmKjQg\"" },
   { name = "_dmarc",                ttl = 600,   type = "DMARC",  target = "v=DMARC1;p=none;rua=mailto:postmaster@fabinfra.net;" },
+  { name = "*.k8s",                 ttl = 1800,  type = "CNAME",  target = "k8s-ingress" },
   { name = "ip",                    ttl = 3600,  type = "NS",     target = "ns-aws.nono.io." },
   { name = "ip",                    ttl = 3600,  type = "NS",     target = "ns-gce.nono.io." },
   { name = "ipv4.ks13.srv",         ttl = 3600,  type = "A",      target = "5.39.85.118" },
