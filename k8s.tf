@@ -77,9 +77,9 @@ resource "helm_release" "k8s_certmanager" {
 
 // Cert-manager configuratrion
 resource "helm_release" "k8s_certmanager_config" {
-  name       = "cert-manager-config"
-  chart      = "${path.module}/k8s/charts/cert-manager-config"
-  namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
+  name      = "cert-manager-config"
+  chart     = "${path.module}/k8s/charts/cert-manager-config"
+  namespace = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
 
   values = [file("${path.module}/k8s/values/cert-manager-config.yaml")]
 
@@ -157,4 +157,25 @@ resource "helm_release" "k8s_ingress_nginx" {
     name  = "controller.service.externalIPs"
     value = "{${join(",", var.k8s_ingress_nginx_external_ips)}}"
   }
+}
+
+// OpenEBS namespace
+resource "kubernetes_namespace" "k8s_openebs_ns" {
+  metadata {
+    name = "openebs"
+    labels = {
+      "name" = "openebs"
+    }
+  }
+}
+
+// OpenEBS
+resource "helm_release" "k8s_openebs" {
+  name       = "openebs"
+  repository = "https://openebs.github.io/charts"
+  chart      = "openebs"
+  version    = var.k8s_openebs_version
+  namespace  = kubernetes_namespace.k8s_openebs_ns.metadata[0].name
+
+  values = [file("${path.module}/k8s/values/openebs.yaml")]
 }

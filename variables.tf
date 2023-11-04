@@ -89,6 +89,9 @@ variable "k8s_ingress_nginx_external_ips" {
   type        = list(string)
   description = "Ingress Nginx external IPs list"
 }
+variable "k8s_openebs_version" {
+  description = "OpenEBS chart version"
+}
 
 // DNS config
 variable "dns_zone" {

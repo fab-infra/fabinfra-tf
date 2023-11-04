@@ -1,0 +1,4 @@
+localprovisioner:
+  basePath: /home/apps/openebs/local
+  hostpathClass:
+    isDefaultClass: true
