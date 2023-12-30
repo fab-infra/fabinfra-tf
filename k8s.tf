@@ -16,6 +16,18 @@ resource "kubernetes_service_account" "k8s_admin_user" {
   automount_service_account_token = false
 }
 
+// Admin user token
+resource "kubernetes_secret" "k8s_admin_user_token" {
+  metadata {
+    name      = "admin-user-token"
+    namespace = "kube-system"
+    annotations = {
+      "kubernetes.io/service-account.name" = kubernetes_service_account.k8s_admin_user.metadata[0].name
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+}
+
 // Admin user cluster role binding
 resource "kubernetes_cluster_role_binding" "k8s_admin_user_cluster_role_binding" {
   metadata {
@@ -30,6 +42,44 @@ resource "kubernetes_cluster_role_binding" "k8s_admin_user_cluster_role_binding"
     kind      = "ServiceAccount"
     name      = kubernetes_service_account.k8s_admin_user.metadata[0].name
     namespace = kubernetes_service_account.k8s_admin_user.metadata[0].namespace
+  }
+}
+
+// Terraform service account
+resource "kubernetes_service_account" "k8s_terraform_sa" {
+  metadata {
+    name      = "terraform"
+    namespace = "kube-system"
+  }
+  automount_service_account_token = false
+}
+
+// Terraform token
+resource "kubernetes_secret" "k8s_terraform_sa_token" {
+  metadata {
+    name      = "terraform-token"
+    namespace = "kube-system"
+    annotations = {
+      "kubernetes.io/service-account.name" = kubernetes_service_account.k8s_terraform_sa.metadata[0].name
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+}
+
+// Terraform cluster role binding
+resource "kubernetes_cluster_role_binding" "k8s_terraform_sa_cluster_role_binding" {
+  metadata {
+    name = "terraform"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.k8s_terraform_sa.metadata[0].name
+    namespace = kubernetes_service_account.k8s_terraform_sa.metadata[0].namespace
   }
 }
 
