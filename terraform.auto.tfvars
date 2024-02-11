@@ -71,7 +71,7 @@ dns_records = [
 # Infra
 infra_namespace = "infra"
 #infra_promtail_loki_address = "toComplete"
-infra_promtail_version = "3.11.0"
+infra_promtail_version = "6.15.5"
 
 # Uptime checks
 uptime_check_urls = [

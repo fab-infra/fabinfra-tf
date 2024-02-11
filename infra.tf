@@ -131,7 +131,7 @@ resource "helm_release" "infra_promtail" {
   values = [file("${path.module}/infra/values/promtail.yaml")]
 
   set_sensitive {
-    name  = "config.lokiAddress"
+    name  = "config.clients[0].url"
     value = var.infra_promtail_loki_address
   }
 }
