@@ -58,7 +58,7 @@ resource "google_secret_manager_secret" "vpn_cacert_secret" {
   secret_id = "vpn-cacert"
 
   replication {
-    automatic = true
+    auto {}
   }
 }
 resource "google_secret_manager_secret_version" "vpn_cacert_secret_version" {
@@ -71,7 +71,7 @@ resource "google_secret_manager_secret" "vpn_servercert_secret" {
   secret_id = "vpn-servercert"
 
   replication {
-    automatic = true
+    auto {}
   }
 }
 resource "google_secret_manager_secret_version" "vpn_servercert_secret_version" {
@@ -84,7 +84,7 @@ resource "google_secret_manager_secret" "vpn_serverkey_secret" {
   secret_id = "vpn-serverkey"
 
   replication {
-    automatic = true
+    auto {}
   }
 }
 resource "google_secret_manager_secret_version" "vpn_serverkey_secret_version" {
@@ -98,12 +98,14 @@ resource "google_service_account" "vpn_sa" {
   display_name = "VPN Service Account"
 }
 resource "google_project_iam_member" "vpn_sa_iam_log_writer" {
-  role   = "roles/logging.logWriter"
-  member = "serviceAccount:${google_service_account.vpn_sa.email}"
+  project = var.gcp_project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.vpn_sa.email}"
 }
 resource "google_project_iam_member" "vpn_sa_iam_metric_writer" {
-  role   = "roles/monitoring.metricWriter"
-  member = "serviceAccount:${google_service_account.vpn_sa.email}"
+  project = var.gcp_project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = "serviceAccount:${google_service_account.vpn_sa.email}"
 }
 resource "google_storage_bucket_iam_member" "vpn_sa_iam_object_viewer" {
   bucket = google_storage_bucket.gcs_bucket_project.name
