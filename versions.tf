@@ -2,24 +2,23 @@ terraform {
   required_providers {
     ovh = {
       source = "ovh/ovh"
-      version = "~> 0.15"
+      version = "~> 0.36"
     }
     google = {
       source  = "hashicorp/google"
-      version = "~> 3.0"
+      version = "~> 5.16"
     }
     grafana = {
       source = "grafana/grafana"
-      version = "~> 1.30"
+      version = "~> 2.11"
     }
     kubernetes = {
       source = "hashicorp/kubernetes"
-      version = "~> 2.0"
+      version = "~> 2.25"
     }
     helm = {
       source = "hashicorp/helm"
-      version = "~> 2.0"
+      version = "~> 2.12"
     }
   }
-  required_version = ">= 0.13"
 }
