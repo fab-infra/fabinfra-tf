@@ -48,6 +48,16 @@ certificates:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
   # VPN clients (devices)
+  - name: fab-precision3580
+    dnsNames:
+      - fab-precision3580.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
   - name: fab-precision7530
     dnsNames:
       - fab-precision7530.home.crespel.me
