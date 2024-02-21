@@ -209,6 +209,15 @@ resource "helm_release" "k8s_ingress_nginx" {
   }
 }
 
+// Metrics Server
+resource "helm_release" "k8s_metrics_server" {
+  name       = "metrics-server"
+  repository = "https://kubernetes-sigs.github.io/metrics-server/"
+  chart      = "metrics-server"
+  version    = var.k8s_metrics_server_version
+  namespace  = "kube-system"
+}
+
 // OpenEBS namespace
 resource "kubernetes_namespace" "k8s_openebs_ns" {
   metadata {

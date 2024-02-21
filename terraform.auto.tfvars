@@ -31,6 +31,7 @@ k8s_dashboard_version = "6.0.8"
 k8s_elastic_operator_version = "2.11.1"
 k8s_ingress_nginx_version = "4.7.1"
 k8s_ingress_nginx_external_ips = ["5.39.85.118"]
+k8s_metrics_server_version = "3.12.0"
 k8s_openebs_version = "3.9.0"
 
 # DNS records
