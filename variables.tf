@@ -89,6 +89,9 @@ variable "k8s_ingress_nginx_external_ips" {
   type        = list(string)
   description = "Ingress Nginx external IPs list"
 }
+variable "k8s_kubelet_csr_approver_version" {
+  description = "Kubelet CSR Approver chart version"
+}
 variable "k8s_metrics_server_version" {
   description = "Metrics Server chart version"
 }

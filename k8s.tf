@@ -209,6 +209,15 @@ resource "helm_release" "k8s_ingress_nginx" {
   }
 }
 
+// Kubelet CSR Approver
+resource "helm_release" "k8s_kubelet_csr_approver" {
+  name       = "kubelet-csr-approver"
+  repository = "https://postfinance.github.io/kubelet-csr-approver/"
+  chart      = "kubelet-csr-approver"
+  version    = var.k8s_kubelet_csr_approver_version
+  namespace  = "kube-system"
+}
+
 // Metrics Server
 resource "helm_release" "k8s_metrics_server" {
   name       = "metrics-server"
