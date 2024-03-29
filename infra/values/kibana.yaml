@@ -21,3 +21,6 @@ ingress:
     - secretName: kibana-tls
       hosts:
         - "kibana.fabinfra.net"
+
+config:
+  server.publicBaseUrl: "https://kibana.fabinfra.net"
