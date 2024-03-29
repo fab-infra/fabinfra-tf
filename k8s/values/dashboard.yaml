@@ -1,12 +1,14 @@
-nodeSelector:
-  server-role-infra: 'true'
-ingress:
-  enabled: true
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-  hosts:
-    - k8s.fabinfra.net
-  tls:
-    - secretName: dashboard-tls
-      hosts:
-        - "k8s.fabinfra.net"
+app:
+  scheduling:
+    nodeSelector:
+      server-role-infra: 'true'
+  ingress:
+    enabled: true
+    hosts:
+      - k8s.fabinfra.net
+    ingressClassName: nginx
+    issuer:
+      name: letsencrypt-prod
+      scope: cluster
+    tls:
+      secretName: dashboard-tls
