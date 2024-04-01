@@ -30,7 +30,7 @@ k8s_certmanager_version = "v1.14.4"
 k8s_dashboard_version = "7.1.3"
 k8s_elastic_operator_version = "2.12.1"
 k8s_ingress_nginx_version = "4.9.1"
-k8s_ingress_nginx_external_ips = ["5.39.85.118"]
+k8s_ingress_nginx_external_ips = ["5.39.85.118", "94.23.252.71"]
 k8s_kubelet_csr_approver_version = "1.0.7"
 k8s_metrics_server_version = "3.12.0"
 k8s_openebs_version = "3.9.0"
@@ -38,8 +38,8 @@ k8s_openebs_version = "3.9.0"
 # DNS records
 dns_zone = "fabinfra.net"
 dns_records = [
-  { name = "",                      ttl = 1800,  type = "A",      target = "5.39.85.118" },
-  { name = "",                      ttl = 1800,  type = "AAAA",   target = "2001:41d0:8:9776::1" },
+  { name = "",                      ttl = 1800,  type = "A",      target = "94.23.252.71" },
+  { name = "",                      ttl = 1800,  type = "AAAA",   target = "2001:41d0:2:7f47::1" },
   { name = "",                      ttl = 3600,  type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 3600,  type = "MX",     target = "1 mx4.mail.ovh.net." },
   { name = "",                      ttl = 3600,  type = "MX",     target = "10 mx3.mail.ovh.net." },
@@ -51,13 +51,13 @@ dns_records = [
   { name = "ip",                    ttl = 3600,  type = "NS",     target = "ns-aws.nono.io." },
   { name = "ip",                    ttl = 3600,  type = "NS",     target = "ns-gce.nono.io." },
   { name = "ipv4.ks13.srv",         ttl = 3600,  type = "A",      target = "5.39.85.118" },
-  { name = "ipv6.ks13.srv",         ttl = 3600,  type = "AAAA",   target = "2001:41d0:8:9776::1" },
   { name = "ipv4.ks14.srv",         ttl = 3600,  type = "A",      target = "94.23.252.71" },
+  { name = "ipv6.ks13.srv",         ttl = 3600,  type = "AAAA",   target = "2001:41d0:8:9776::1" },
   { name = "ipv6.ks14.srv",         ttl = 3600,  type = "AAAA",   target = "2001:41d0:2:7f47::1" },
   { name = "k8s",                   ttl = 1800,  type = "CNAME",  target = "k8s-ingress" },
-  { name = "k8s-ingress",           ttl = 1800,  type = "CNAME",  target = "ipv4.ks13.srv" },
-  { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "ipv4.ks13.srv" },
-  { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "ks13.vpn" },
+  { name = "k8s-ingress",           ttl = 1800,  type = "CNAME",  target = "ipv4.ks14.srv" },
+  { name = "k8s-master",            ttl = 1800,  type = "CNAME",  target = "ipv4.ks14.srv" },
+  { name = "k8s-master.vpn",        ttl = 1800,  type = "CNAME",  target = "ks14.vpn" },
   { name = "kibana",                ttl = 1800,  type = "CNAME",  target = "k8s-ingress" },
   { name = "ks13.srv",              ttl = 3600,  type = "A",      target = "5.39.85.118" },
   { name = "ks13.srv",              ttl = 3600,  type = "AAAA",   target = "2001:41d0:8:9776::1" },
@@ -72,7 +72,7 @@ dns_records = [
   { name = "od01.vpn",              ttl = 3600,  type = "A",      target = "10.8.2.126" },
   { name = "rb04.srv",              ttl = 3600,  type = "A",      target = "192.168.0.121" },
   { name = "rb04.vpn",              ttl = 3600,  type = "A",      target = "10.8.2.122" },
-  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks13.srv" },
+  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks14.srv" },
 ]
 
 # Infra
