@@ -1,0 +1,14 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: ingress-server-role-sftp
+spec:
+  order: 306
+  selector: has(kubernetes-host) && server-role-sftp == 'true'
+  ingress:
+  # Allow traffic to SFTP
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - "2022"
