@@ -120,7 +120,37 @@ resource "helm_release" "infra_kibana" {
   values = [file("${path.module}/infra/values/kibana.yaml")]
 }
 
+// OpenTelemetry Collector
+resource "kubernetes_secret" "infra_otelcol_secret" {
+  metadata {
+    name      = "otelcol-secret"
+    namespace = kubernetes_namespace.infra_ns.metadata[0].name
+  }
+  type = "Opaque"
+  data = {
+    GRAFANA_CLOUD_API_KEY             = var.infra_otelcol_grafana_api_key
+    GRAFANA_CLOUD_PROMETHEUS_URL      = var.infra_otelcol_prometheus_url
+    GRAFANA_CLOUD_PROMETHEUS_USERNAME = var.infra_otelcol_prometheus_username
+    GRAFANA_CLOUD_LOKI_URL            = var.infra_otelcol_loki_url
+    GRAFANA_CLOUD_LOKI_USERNAME       = var.infra_otelcol_loki_username
+    GRAFANA_CLOUD_TEMPO_ENDPOINT      = var.infra_otelcol_tempo_endpoint
+    GRAFANA_CLOUD_TEMPO_USERNAME      = var.infra_otelcol_tempo_username
+  }
+}
+resource "helm_release" "infra_otelcol" {
+  name       = "otelcol"
+  repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
+  chart      = "opentelemetry-collector"
+  version    = var.infra_otelcol_version
+  namespace  = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/otelcol.yaml")]
+
+  depends_on = [kubernetes_secret.infra_otelcol_secret]
+}
+
 // Promtail
+/*
 resource "helm_release" "infra_promtail" {
   name       = "promtail"
   repository = "https://grafana.github.io/helm-charts"
@@ -135,3 +165,4 @@ resource "helm_release" "infra_promtail" {
     value = var.infra_promtail_loki_address
   }
 }
+*/

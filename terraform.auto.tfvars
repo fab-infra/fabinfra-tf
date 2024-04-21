@@ -77,6 +77,14 @@ dns_records = [
 
 # Infra
 infra_namespace = "infra"
+#infra_otelcol_grafana_api_key = "toComplete"
+infra_otelcol_prometheus_url = "https://prometheus-blocks-prod-us-central1.grafana.net/api/prom/push"
+#infra_otelcol_prometheus_username = "toComplete"
+infra_otelcol_loki_url = "https://logs-prod-us-central1.grafana.net/loki/api/v1/push"
+#infra_otelcol_loki_username = "toComplete"
+infra_otelcol_tempo_endpoint = "tempo-us-central1.grafana.net:443"
+#infra_otelcol_tempo_username = "toComplete"
+infra_otelcol_version = "0.89.0"
 #infra_promtail_loki_address = "toComplete"
 infra_promtail_version = "6.15.5"
 

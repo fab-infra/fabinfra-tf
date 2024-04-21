@@ -118,6 +118,31 @@ variable "dns_records" {
 variable "infra_namespace" {
   description = "Infra Kubernetes namespace"
 }
+variable "infra_otelcol_grafana_api_key" {
+  description = "OpenTelemetry Grafana API key"
+  sensitive   = true
+}
+variable "infra_otelcol_prometheus_url" {
+  description = "OpenTelemetry Prometheus URL"
+}
+variable "infra_otelcol_prometheus_username" {
+  description = "OpenTelemetry Prometheus username"
+}
+variable "infra_otelcol_loki_url" {
+  description = "OpenTelemetry Loki URL"
+}
+variable "infra_otelcol_loki_username" {
+  description = "OpenTelemetry Loki username"
+}
+variable "infra_otelcol_tempo_endpoint" {
+  description = "OpenTelemetry Tempo endpoint"
+}
+variable "infra_otelcol_tempo_username" {
+  description = "OpenTelemetry Tempo username"
+}
+variable "infra_otelcol_version" {
+  description = "OpenTelemetry Collector Helm chart version"
+}
 variable "infra_promtail_loki_address" {
   description = "Promtail Loki address (e.g. https://username:password@loki-gateway/api/prom/push)"
   sensitive   = true

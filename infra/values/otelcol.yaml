@@ -1,0 +1,193 @@
+fullnameOverride: otelcol
+
+mode: daemonset
+
+image:
+  repository: otel/opentelemetry-collector-contrib
+
+presets:
+  hostMetrics:
+    enabled: true
+  kubernetesAttributes:
+    enabled: true
+  logsCollection:
+    enabled: true
+    includeCollectorLogs: true
+    storeCheckpoints: true
+
+config:
+  receivers:
+    hostmetrics:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/hostmetricsreceiver
+      scrapers:
+        cpu:
+          metrics:
+            system.cpu.logical.count:
+              enabled: true
+            system.cpu.utilization:
+              enabled: true
+        filesystem:
+          metrics:
+            system.filesystem.utilization:
+              enabled: true
+        memory:
+          metrics:
+            system.memory.limit:
+              enabled: true
+            system.memory.utilization:
+              enabled: true
+        paging:
+          metrics:
+            system.paging.utilization:
+              enabled: true
+        network:
+          exclude:
+            interfaces: ["cali.*", "veth.*"]
+            match_type: regexp
+        processes:
+  processors:
+    resourcedetection:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/resourcedetectionprocessor
+      detectors: ["system", "k8snode"]
+      override: false
+    transform/drop_unneeded_resource_attributes:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor
+      error_mode: ignore
+      trace_statements:
+        - context: resource
+          statements:
+            - delete_key(attributes, "k8s.pod.start_time")
+            - delete_key(attributes, "os.description")
+            - delete_key(attributes, "os.type")
+            - delete_key(attributes, "process.command_args")
+            - delete_key(attributes, "process.executable.path")
+            - delete_key(attributes, "process.pid")
+            - delete_key(attributes, "process.runtime.description")
+            - delete_key(attributes, "process.runtime.name")
+            - delete_key(attributes, "process.runtime.version")
+      metric_statements:
+        - context: resource
+          statements:
+            - delete_key(attributes, "k8s.pod.start_time")
+            - delete_key(attributes, "os.description")
+            - delete_key(attributes, "os.type")
+            - delete_key(attributes, "process.command_args")
+            - delete_key(attributes, "process.executable.path")
+            - delete_key(attributes, "process.pid")
+            - delete_key(attributes, "process.runtime.description")
+            - delete_key(attributes, "process.runtime.name")
+            - delete_key(attributes, "process.runtime.version")
+      log_statements:
+        - context: resource
+          statements:
+            - delete_key(attributes, "k8s.pod.start_time")
+            - delete_key(attributes, "os.description")
+            - delete_key(attributes, "os.type")
+            - delete_key(attributes, "process.command_args")
+            - delete_key(attributes, "process.executable.path")
+            - delete_key(attributes, "process.pid")
+            - delete_key(attributes, "process.runtime.description")
+            - delete_key(attributes, "process.runtime.name")
+            - delete_key(attributes, "process.runtime.version")
+    transform/add_resource_attributes_as_metric_attributes:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor
+      error_mode: ignore
+      metric_statements:
+        - context: datapoint
+          statements:
+            - set(attributes["deployment.environment"], resource.attributes["deployment.environment"])
+            - set(attributes["service.version"], resource.attributes["service.version"])
+            - set(attributes["host.name"], resource.attributes["host.name"])
+            - set(attributes["k8s.node.name"], resource.attributes["k8s.node.name"])
+    transform/add_loki_attribute_hints:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor
+      log_statements:
+        - context: resource
+          statements:
+            - set(attributes["loki.resource.labels"], "host.name, k8s.node.name, k8s.namespace.name, k8s.pod.name, k8s.container.name, service.namespace, service.name")
+        - context: log
+          statements:
+            - set(attributes["loki.attribute.labels"], "log.iostream")
+  exporters:
+    otlp/grafana_cloud_traces:
+      # https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlpexporter
+      endpoint: "${env:GRAFANA_CLOUD_TEMPO_ENDPOINT}"
+      auth:
+        authenticator: basicauth/grafana_cloud_traces
+    loki/grafana_cloud_logs:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/lokiexporter
+      endpoint: "${env:GRAFANA_CLOUD_LOKI_URL}"
+      auth:
+        authenticator: basicauth/grafana_cloud_logs
+    prometheusremotewrite/grafana_cloud_metrics:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/prometheusremotewriteexporter
+      endpoint: "${env:GRAFANA_CLOUD_PROMETHEUS_URL}"
+      add_metric_suffixes: false
+      auth:
+        authenticator: basicauth/grafana_cloud_metrics
+  extensions:
+    basicauth/grafana_cloud_traces:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/extension/basicauthextension
+      client_auth:
+        username: "${env:GRAFANA_CLOUD_TEMPO_USERNAME}"
+        password: "${env:GRAFANA_CLOUD_API_KEY}"
+    basicauth/grafana_cloud_metrics:
+      client_auth:
+        username: "${env:GRAFANA_CLOUD_PROMETHEUS_USERNAME}"
+        password: "${env:GRAFANA_CLOUD_API_KEY}"
+    basicauth/grafana_cloud_logs:
+      client_auth:
+        username: "${env:GRAFANA_CLOUD_LOKI_USERNAME}"
+        password: "${env:GRAFANA_CLOUD_API_KEY}"
+  service:
+    extensions:
+      - health_check
+      - basicauth/grafana_cloud_traces
+      - basicauth/grafana_cloud_metrics
+      - basicauth/grafana_cloud_logs
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, batch]
+        exporters: [otlp/grafana_cloud_traces]
+      metrics:
+        receivers: [otlp, prometheus, hostmetrics]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, transform/add_resource_attributes_as_metric_attributes, batch]
+        exporters: [prometheusremotewrite/grafana_cloud_metrics]
+      logs:
+        receivers: [otlp]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, transform/add_loki_attribute_hints, batch]
+        exporters: [loki/grafana_cloud_logs]
+
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
+
+ports:
+  jaeger-compact:
+    enabled: false
+  jaeger-thrift:
+    enabled: false
+  jaeger-grpc:
+    enabled: false
+  zipkin:
+    enabled: false
+
+clusterRole:
+  rules:
+    - apiGroups: [""]
+      resources: ["nodes"]
+      verbs: ["get", "list"]
+
+extraEnvsFrom:
+  - secretRef:
+      name: otelcol-secret
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+tolerations:
+  - key: dedicated-server
+    operator: Exists
+    effect: NoSchedule
