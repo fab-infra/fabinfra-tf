@@ -148,21 +148,3 @@ resource "helm_release" "infra_otelcol" {
 
   depends_on = [kubernetes_secret.infra_otelcol_secret]
 }
-
-// Promtail
-/*
-resource "helm_release" "infra_promtail" {
-  name       = "promtail"
-  repository = "https://grafana.github.io/helm-charts"
-  chart      = "promtail"
-  version    = var.infra_promtail_version
-  namespace  = kubernetes_namespace.infra_ns.metadata[0].name
-
-  values = [file("${path.module}/infra/values/promtail.yaml")]
-
-  set_sensitive {
-    name  = "config.clients[0].url"
-    value = var.infra_promtail_loki_address
-  }
-}
-*/

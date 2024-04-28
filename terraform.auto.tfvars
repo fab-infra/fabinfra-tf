@@ -85,8 +85,6 @@ infra_otelcol_loki_url = "https://logs-prod-us-central1.grafana.net/loki/api/v1/
 infra_otelcol_tempo_endpoint = "tempo-us-central1.grafana.net:443"
 #infra_otelcol_tempo_username = "toComplete"
 infra_otelcol_version = "0.89.0"
-#infra_promtail_loki_address = "toComplete"
-infra_promtail_version = "6.15.5"
 
 # Uptime checks
 uptime_check_urls = [

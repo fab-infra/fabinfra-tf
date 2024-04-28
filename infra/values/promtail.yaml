@@ -1,6 +1,0 @@
-fullnameOverride: promtail
-
-tolerations:
-  - key: dedicated-server
-    operator: Exists
-    effect: NoSchedule

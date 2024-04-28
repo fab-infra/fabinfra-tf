@@ -143,13 +143,6 @@ variable "infra_otelcol_tempo_username" {
 variable "infra_otelcol_version" {
   description = "OpenTelemetry Collector Helm chart version"
 }
-variable "infra_promtail_loki_address" {
-  description = "Promtail Loki address (e.g. https://username:password@loki-gateway/api/prom/push)"
-  sensitive   = true
-}
-variable "infra_promtail_version" {
-  description = "Promtail Helm chart version"
-}
 
 // Uptime checks
 variable "uptime_check_urls" {
