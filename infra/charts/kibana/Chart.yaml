@@ -2,5 +2,5 @@ apiVersion: v2
 name: kibana
 description: Kibana
 type: application
-version: 0.7.0
-appVersion: "8.12.1"
+version: 0.8.0
+appVersion: "8.13.3"
