@@ -89,8 +89,9 @@ infra_otelcol_version = "0.89.0"
 # Uptime checks
 uptime_check_urls = [
  "https://k8s.fabinfra.net/",
- "https://kibana.fabinfra.net/login",
 ]
+uptime_frequency = 120000
+uptime_timeout = 10000
 
 # VPN
 vpn_machine_type = "e2-micro"
