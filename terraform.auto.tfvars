@@ -66,7 +66,7 @@ dns_records = [
   { name = "od01.vpn",              ttl = 3600,  type = "A",      target = "10.8.2.126" },
   { name = "rb04.srv",              ttl = 3600,  type = "A",      target = "192.168.0.121" },
   { name = "rb04.vpn",              ttl = 3600,  type = "A",      target = "10.8.2.122" },
-  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ks14.srv" },
+  { name = "vpn",                   ttl = 1800,  type = "CNAME",  target = "ipv4.ks14.srv" },
 ]
 
 # Infra
