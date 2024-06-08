@@ -84,7 +84,7 @@ infra_otelcol_version = "0.89.0"
 uptime_check_urls = [
  "https://k8s.fabinfra.net/",
 ]
-uptime_frequency = 120000
+uptime_frequency = 300000
 uptime_timeout = 10000
 
 # VPN
