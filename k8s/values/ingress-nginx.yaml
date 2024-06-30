@@ -1,24 +1,29 @@
 controller:
-  image:
-    digest:
+  allowSnippetAnnotations: true
   config:
     proxy-body-size: 100m
     ssl-ciphers: "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384"
     ssl-protocols: "TLSv1.2 TLSv1.3"
-  allowSnippetAnnotations: true
+  image:
+    digest:
   ingressClassResource:
     default: true
   kind: DaemonSet
+  metrics:
+    enabled: true
   nodeSelector:
     server-role-web: 'true'
-  tolerations:
-    - key: dedicated-server
-      operator: Exists
-      effect: NoSchedule
+  podAnnotations:
+    prometheus.io/port: "10254"
+    prometheus.io/scrape: "true"
   service:
     externalTrafficPolicy: Local
     type: NodePort
     nodePorts:
       http: 30080
       https: 30443
+  tolerations:
+    - key: dedicated-server
+      operator: Exists
+      effect: NoSchedule
   watchIngressWithoutClass: true
