@@ -193,6 +193,42 @@ resource "kubernetes_namespace" "k8s_ingress_nginx_ns" {
   }
 }
 
+// Ingress Nginx OpenTelemetry config
+resource "kubernetes_config_map" "k8s_ingress_nginx_otelcol_config" {
+  metadata {
+    name      = "ingress-nginx-otelcol-config"
+    namespace = kubernetes_namespace.k8s_ingress_nginx_ns.metadata[0].name
+  }
+  data = {
+    "config.yaml" : <<-EOF
+      receivers:
+        prometheus:
+          config:
+            scrape_configs:
+            - job_name: 'ingress-nginx'
+              scrape_interval: 10s
+              static_configs:
+              - targets: ['127.0.0.1:10254']
+      processors:
+        batch:
+      exporters:
+        otlp:
+          endpoint: $${env:HOST_IP}:4317
+          tls:
+            insecure: true
+      extensions:
+        health_check:
+      service:
+        extensions: [health_check]
+        pipelines:
+          metrics:
+            receivers: [prometheus]
+            processors: [batch]
+            exporters: [otlp]
+      EOF
+  }
+}
+
 // Ingress Nginx
 resource "helm_release" "k8s_ingress_nginx" {
   name       = "ingress-nginx"
