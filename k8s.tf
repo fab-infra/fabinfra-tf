@@ -206,7 +206,7 @@ resource "kubernetes_config_map" "k8s_ingress_nginx_otelcol_config" {
           config:
             scrape_configs:
             - job_name: 'ingress-nginx'
-              scrape_interval: 10s
+              scrape_interval: 60s
               static_configs:
               - targets: ['127.0.0.1:10254']
       processors:
