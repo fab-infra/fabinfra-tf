@@ -118,27 +118,15 @@ variable "dns_records" {
 variable "infra_namespace" {
   description = "Infra Kubernetes namespace"
 }
-variable "infra_otelcol_grafana_api_key" {
-  description = "OpenTelemetry Grafana API key"
+variable "infra_otelcol_otlphttp_endpoint" {
+  description = "OpenTelemetry OTLP HTTP endpoint"
+}
+variable "infra_otelcol_otlphttp_username" {
+  description = "OpenTelemetry OTLP HTTP username"
+}
+variable "infra_otelcol_otlphttp_password" {
+  description = "OpenTelemetry OTLP HTTP password"
   sensitive   = true
-}
-variable "infra_otelcol_prometheus_url" {
-  description = "OpenTelemetry Prometheus URL"
-}
-variable "infra_otelcol_prometheus_username" {
-  description = "OpenTelemetry Prometheus username"
-}
-variable "infra_otelcol_loki_url" {
-  description = "OpenTelemetry Loki URL"
-}
-variable "infra_otelcol_loki_username" {
-  description = "OpenTelemetry Loki username"
-}
-variable "infra_otelcol_tempo_endpoint" {
-  description = "OpenTelemetry Tempo endpoint"
-}
-variable "infra_otelcol_tempo_username" {
-  description = "OpenTelemetry Tempo username"
 }
 variable "infra_otelcol_version" {
   description = "OpenTelemetry Collector Helm chart version"

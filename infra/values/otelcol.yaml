@@ -102,65 +102,35 @@ config:
             - set(attributes["k8s.namespace.name"], resource.attributes["k8s.namespace.name"])
             - set(attributes["k8s.pod.name"], resource.attributes["k8s.pod.name"])
             - set(attributes["k8s.container.name"], resource.attributes["k8s.container.name"])
-    transform/add_loki_attribute_hints:
-      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor
-      log_statements:
-        - context: resource
-          statements:
-            - set(attributes["loki.resource.labels"], "deployment.environment, host.name, k8s.node.name, k8s.namespace.name, k8s.pod.name, k8s.container.name, service.namespace, service.name, service.version")
-        - context: log
-          statements:
-            - set(attributes["loki.attribute.labels"], "log.iostream")
   exporters:
-    otlp/grafana_cloud_traces:
-      # https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlpexporter
-      endpoint: "${env:GRAFANA_CLOUD_TEMPO_ENDPOINT}"
+    otlphttp:
+      # https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlphttpexporter
+      endpoint: "${env:OTELCOL_OTLPHTTP_ENDPOINT}"
       auth:
-        authenticator: basicauth/grafana_cloud_traces
-    loki/grafana_cloud_logs:
-      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/lokiexporter
-      endpoint: "${env:GRAFANA_CLOUD_LOKI_URL}"
-      auth:
-        authenticator: basicauth/grafana_cloud_logs
-    prometheusremotewrite/grafana_cloud_metrics:
-      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/prometheusremotewriteexporter
-      endpoint: "${env:GRAFANA_CLOUD_PROMETHEUS_URL}"
-      add_metric_suffixes: false
-      auth:
-        authenticator: basicauth/grafana_cloud_metrics
+        authenticator: basicauth/otlphttp
   extensions:
-    basicauth/grafana_cloud_traces:
+    basicauth/otlphttp:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/extension/basicauthextension
       client_auth:
-        username: "${env:GRAFANA_CLOUD_TEMPO_USERNAME}"
-        password: "${env:GRAFANA_CLOUD_API_KEY}"
-    basicauth/grafana_cloud_metrics:
-      client_auth:
-        username: "${env:GRAFANA_CLOUD_PROMETHEUS_USERNAME}"
-        password: "${env:GRAFANA_CLOUD_API_KEY}"
-    basicauth/grafana_cloud_logs:
-      client_auth:
-        username: "${env:GRAFANA_CLOUD_LOKI_USERNAME}"
-        password: "${env:GRAFANA_CLOUD_API_KEY}"
+        username: "${env:OTELCOL_OTLPHTTP_USERNAME}"
+        password: "${env:OTELCOL_OTLPHTTP_PASSWORD}"
   service:
     extensions:
       - health_check
-      - basicauth/grafana_cloud_traces
-      - basicauth/grafana_cloud_metrics
-      - basicauth/grafana_cloud_logs
+      - basicauth/otlphttp
     pipelines:
       traces:
         receivers: [otlp]
         processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, batch]
-        exporters: [otlp/grafana_cloud_traces]
+        exporters: [otlphttp]
       metrics:
         receivers: [otlp, prometheus, hostmetrics]
         processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, transform/add_resource_attributes_as_metric_attributes, batch]
-        exporters: [prometheusremotewrite/grafana_cloud_metrics]
+        exporters: [otlphttp]
       logs:
         receivers: [otlp]
-        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, transform/add_loki_attribute_hints, batch]
-        exporters: [loki/grafana_cloud_logs]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, batch]
+        exporters: [otlphttp]
 
 hostNetwork: true
 dnsPolicy: ClusterFirstWithHostNet

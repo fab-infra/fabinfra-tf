@@ -128,13 +128,9 @@ resource "kubernetes_secret" "infra_otelcol_secret" {
   }
   type = "Opaque"
   data = {
-    GRAFANA_CLOUD_API_KEY             = var.infra_otelcol_grafana_api_key
-    GRAFANA_CLOUD_PROMETHEUS_URL      = var.infra_otelcol_prometheus_url
-    GRAFANA_CLOUD_PROMETHEUS_USERNAME = var.infra_otelcol_prometheus_username
-    GRAFANA_CLOUD_LOKI_URL            = var.infra_otelcol_loki_url
-    GRAFANA_CLOUD_LOKI_USERNAME       = var.infra_otelcol_loki_username
-    GRAFANA_CLOUD_TEMPO_ENDPOINT      = var.infra_otelcol_tempo_endpoint
-    GRAFANA_CLOUD_TEMPO_USERNAME      = var.infra_otelcol_tempo_username
+    OTELCOL_OTLPHTTP_ENDPOINT = var.infra_otelcol_otlphttp_endpoint
+    OTELCOL_OTLPHTTP_USERNAME = var.infra_otelcol_otlphttp_username
+    OTELCOL_OTLPHTTP_PASSWORD = var.infra_otelcol_otlphttp_password
   }
 }
 resource "helm_release" "infra_otelcol" {
