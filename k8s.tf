@@ -209,6 +209,10 @@ resource "kubernetes_config_map" "k8s_ingress_nginx_otelcol_config" {
               scrape_interval: 60s
               static_configs:
               - targets: ['127.0.0.1:10254']
+              metric_relabel_configs:
+              - source_labels: [__name__]
+                regex: 'nginx_ingress_controller_(config|nginx_process|request_duration_seconds|request_size|requests|response_size|ssl|success).*'
+                action: keep
       processors:
         batch:
       exporters:
