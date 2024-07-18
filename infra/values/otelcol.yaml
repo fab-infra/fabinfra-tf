@@ -19,6 +19,7 @@ config:
   receivers:
     hostmetrics:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/hostmetricsreceiver
+      collection_interval: 30s
       scrapers:
         cpu:
           metrics:
