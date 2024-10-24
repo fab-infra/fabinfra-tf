@@ -120,7 +120,20 @@ resource "helm_release" "infra_kibana" {
   values = [file("${path.module}/infra/values/kibana.yaml")]
 }
 
-// OpenTelemetry Collector
+// OpenTelemetry Collector Agent
+resource "helm_release" "infra_otelcol" {
+  name       = "otelcol"
+  repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
+  chart      = "opentelemetry-collector"
+  version    = var.infra_otelcol_version
+  namespace  = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/otelcol-agent.yaml")]
+
+  depends_on = [kubernetes_secret.infra_otelcol_secret]
+}
+
+// OpenTelemetry Collector Gateway
 resource "kubernetes_secret" "infra_otelcol_secret" {
   metadata {
     name      = "otelcol-secret"
@@ -133,14 +146,14 @@ resource "kubernetes_secret" "infra_otelcol_secret" {
     OTELCOL_OTLPHTTP_PASSWORD = var.infra_otelcol_otlphttp_password
   }
 }
-resource "helm_release" "infra_otelcol" {
-  name       = "otelcol"
+resource "helm_release" "infra_otelcol_gateway" {
+  name       = "otelcol-gateway"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart      = "opentelemetry-collector"
   version    = var.infra_otelcol_version
   namespace  = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/otelcol.yaml")]
+  values = [file("${path.module}/infra/values/otelcol-gateway.yaml")]
 
   depends_on = [kubernetes_secret.infra_otelcol_secret]
 }
