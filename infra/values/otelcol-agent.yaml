@@ -46,6 +46,14 @@ config:
             interfaces: ["cali.*", "veth.*"]
             match_type: regexp
         processes:
+    prometheus:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver
+      config:
+        scrape_configs:
+          - job_name: "otelcol-agent"
+            scrape_interval: 30s
+            static_configs:
+              - targets: ["${env:MY_POD_IP}:8888"]
   processors:
     resourcedetection:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/resourcedetectionprocessor
@@ -86,6 +94,7 @@ ports:
     enabled: false
 
 clusterRole:
+  create: true
   rules:
     - apiGroups: [""]
       resources: ["nodes"]

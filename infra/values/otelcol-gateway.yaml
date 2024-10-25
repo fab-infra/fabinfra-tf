@@ -6,7 +6,20 @@ image:
   repository: otel/opentelemetry-collector-contrib
 
 config:
+  receivers:
+    prometheus:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver
+      config:
+        scrape_configs:
+          - job_name: "otelcol-gateway"
+            scrape_interval: 30s
+            static_configs:
+              - targets: ["${env:MY_POD_IP}:8888"]
   processors:
+    resourcedetection:
+      # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/resourcedetectionprocessor
+      detectors: ["system", "k8snode"]
+      override: false
     transform/drop_unneeded_resource_attributes:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor
       error_mode: ignore
@@ -78,15 +91,15 @@ config:
     pipelines:
       traces:
         receivers: [otlp]
-        processors: [memory_limiter, transform/drop_unneeded_resource_attributes, batch]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, batch]
         exporters: [otlphttp]
       metrics:
-        receivers: [otlp]
-        processors: [memory_limiter, transform/drop_unneeded_resource_attributes, transform/add_resource_attributes_as_metric_attributes, batch]
+        receivers: [otlp, prometheus]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, transform/add_resource_attributes_as_metric_attributes, batch]
         exporters: [otlphttp]
       logs:
         receivers: [otlp]
-        processors: [memory_limiter, transform/drop_unneeded_resource_attributes, batch]
+        processors: [memory_limiter, resourcedetection, transform/drop_unneeded_resource_attributes, batch]
         exporters: [otlphttp]
 
 ports:
@@ -98,6 +111,19 @@ ports:
     enabled: false
   zipkin:
     enabled: false
+
+clusterRole:
+  create: true
+  rules:
+    - apiGroups: [""]
+      resources: ["nodes"]
+      verbs: ["get", "list"]
+
+extraEnvs:
+  - name: K8S_NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
 
 extraEnvsFrom:
   - secretRef:
