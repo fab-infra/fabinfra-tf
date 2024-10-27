@@ -50,10 +50,37 @@ config:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver
       config:
         scrape_configs:
-          - job_name: "otelcol-agent"
+          - job_name: otelcol-agent
             scrape_interval: 30s
             static_configs:
               - targets: ["${env:MY_POD_IP}:8888"]
+          - job_name: k8s-pods
+            scrape_interval: 60s
+            kubernetes_sd_configs:
+              - role: pod
+            relabel_configs:
+              - source_labels: [__meta_kubernetes_pod_node_name]
+                action: keep
+                regex: "${env:K8S_NODE_NAME}"
+              - source_labels: [__meta_kubernetes_pod_phase]
+                action: keep
+                regex: Running
+              - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+                action: keep
+                regex: "true"
+              - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
+                action: replace
+                target_label: __scheme__
+                regex: (https?)
+              - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+                action: replace
+                target_label: __metrics_path__
+                regex: (.+)
+              - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+                action: replace
+                target_label: __address__
+                regex: ([^:]+)(?::\d+)?;(\d+)
+                replacement: $$1:$$2
   processors:
     resourcedetection:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/resourcedetectionprocessor
@@ -69,15 +96,15 @@ config:
     pipelines:
       traces:
         receivers: [otlp]
-        processors: [memory_limiter, resourcedetection, batch]
+        processors: [memory_limiter, resourcedetection, k8sattributes, batch]
         exporters: [otlphttp]
       metrics:
         receivers: [otlp, prometheus, hostmetrics]
-        processors: [memory_limiter, resourcedetection, batch]
+        processors: [memory_limiter, resourcedetection, k8sattributes, batch]
         exporters: [otlphttp]
       logs:
         receivers: [otlp]
-        processors: [memory_limiter, resourcedetection, batch]
+        processors: [memory_limiter, resourcedetection, k8sattributes, batch]
         exporters: [otlphttp]
 
 hostNetwork: true

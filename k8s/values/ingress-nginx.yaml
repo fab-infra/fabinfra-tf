@@ -4,40 +4,6 @@ controller:
     proxy-body-size: 100m
     ssl-ciphers: "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384"
     ssl-protocols: "TLSv1.2 TLSv1.3"
-  extraContainers:
-    - name: otelcol
-      image: otel/opentelemetry-collector-contrib:0.98.0
-      imagePullPolicy: IfNotPresent
-      env:
-        - name: HOST_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.hostIP
-      volumeMounts:
-        - name: otelcol-config
-          mountPath: /etc/otelcol-contrib
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 13133
-          scheme: HTTP
-        timeoutSeconds: 1
-        periodSeconds: 10
-        successThreshold: 1
-        failureThreshold: 3
-      readinessProbe:
-        httpGet:
-          path: /
-          port: 13133
-          scheme: HTTP
-        timeoutSeconds: 1
-        periodSeconds: 10
-        successThreshold: 1
-        failureThreshold: 3
-  extraVolumes:
-    - name: otelcol-config
-      configMap:
-        name: ingress-nginx-otelcol-config
   image:
     digest:
   ingressClassResource:
