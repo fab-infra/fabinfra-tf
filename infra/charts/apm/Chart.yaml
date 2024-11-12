@@ -1,0 +1,6 @@
+apiVersion: v2
+name: apm
+description: APM Server
+type: application
+version: 0.1.0
+appVersion: "8.15.4"

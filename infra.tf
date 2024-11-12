@@ -93,6 +93,15 @@ resource "kubernetes_network_policy" "infra_network_policy_elasticsearch" {
   }
 }
 
+// APM server
+resource "helm_release" "infra_apm" {
+  name      = "apm"
+  chart     = "${path.module}/infra/charts/apm"
+  namespace = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/apm.yaml")]
+}
+
 // Certificates
 resource "helm_release" "infra_certificates" {
   name      = "certificates"

@@ -1,0 +1,41 @@
+apiVersion: apm.k8s.elastic.co/v1
+kind: ApmServer
+metadata:
+  name: {{ include "apm.fullname" . }}
+  labels:
+    {{- include "apm.labels" . | nindent 4 }}
+spec:
+  version: "{{ .Values.image.tag | default .Chart.AppVersion }}"
+  image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+  count: {{ .Values.replicaCount }}
+  elasticsearchRef:
+    {{- toYaml .Values.elasticsearchRef | nindent 4 }}
+  kibanaRef:
+    {{- toYaml .Values.kibanaRef | nindent 4 }}
+  config:
+    {{- toYaml .Values.config | nindent 4 }}
+  podTemplate:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
