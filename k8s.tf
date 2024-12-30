@@ -143,27 +143,6 @@ resource "helm_release" "k8s_certmanager_config" {
   }
 }
 
-// Dashboard namespace
-resource "kubernetes_namespace" "k8s_dashboard_ns" {
-  metadata {
-    name = "kubernetes-dashboard"
-    labels = {
-      "name" = "kubernetes-dashboard"
-    }
-  }
-}
-
-// Dashboard
-resource "helm_release" "k8s_dashboard" {
-  name       = "kubernetes-dashboard"
-  repository = "https://kubernetes.github.io/dashboard/"
-  chart      = "kubernetes-dashboard"
-  version    = var.k8s_dashboard_version
-  namespace  = kubernetes_namespace.k8s_dashboard_ns.metadata[0].name
-
-  values = [file("${path.module}/k8s/values/dashboard.yaml")]
-}
-
 // Elastic ECK operator namespace
 resource "kubernetes_namespace" "k8s_elastic_operator_ns" {
   metadata {

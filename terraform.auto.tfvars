@@ -27,7 +27,6 @@ k8s_calico_version = "v3.27.2"
 k8s_certmanager_version = "v1.14.4"
 # k8s_certmanager_root_ca_crt = "toComplete"
 # k8s_certmanager_root_ca_key = "toComplete"
-k8s_dashboard_version = "7.1.3"
 k8s_elastic_operator_version = "2.14.0"
 k8s_ingress_nginx_version = "4.11.3"
 k8s_ingress_nginx_external_ips = ["94.23.252.71"]
@@ -78,9 +77,7 @@ infra_otelcol_otlphttp_endpoint = "https://otlp-gateway-prod-us-central-0.grafan
 infra_otelcol_version = "0.89.0"
 
 # Uptime checks
-uptime_check_urls = [
- "https://k8s.fabinfra.net/",
-]
+uptime_check_urls = []
 uptime_frequency = 300000
 uptime_timeout = 10000
 
