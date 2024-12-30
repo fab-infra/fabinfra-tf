@@ -9,13 +9,8 @@ controller:
   ingressClassResource:
     default: true
   kind: DaemonSet
-  metrics:
-    enabled: true
   nodeSelector:
     server-role-web: "true"
-  podAnnotations:
-    prometheus.io/port: "10254"
-    prometheus.io/scrape: "true"
   service:
     externalTrafficPolicy: Local
     type: NodePort
