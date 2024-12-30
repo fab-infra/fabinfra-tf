@@ -32,7 +32,7 @@ k8s_ingress_nginx_version = "4.11.3"
 k8s_ingress_nginx_external_ips = ["94.23.252.71"]
 k8s_kubelet_csr_approver_version = "1.2.4"
 k8s_metrics_server_version = "3.12.2"
-k8s_openebs_version = "3.9.0"
+k8s_openebs_version = "4.1.1"
 
 # DNS records
 dns_zone = "fabinfra.net"

@@ -1,4 +1,14 @@
-localprovisioner:
-  basePath: /home/apps/openebs/local
+localpv-provisioner:
+  localpv:
+    basePath: /home/apps/openebs/local
   hostpathClass:
     isDefaultClass: true
+engines:
+  local:
+    lvm:
+      enabled: false
+    zfs:
+      enabled: false
+  replicated:
+    mayastor:
+      enabled: false
