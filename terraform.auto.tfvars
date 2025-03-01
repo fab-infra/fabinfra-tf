@@ -74,7 +74,7 @@ infra_namespace = "infra"
 infra_otelcol_otlphttp_endpoint = "https://otlp-gateway-prod-us-central-0.grafana.net/otlp"
 #infra_otelcol_otlphttp_username = "toComplete"
 #infra_otelcol_otlphttp_password = "toComplete"
-infra_otelcol_version = "0.89.0"
+infra_otelcol_version = "0.117.1"
 
 # Uptime checks
 uptime_check_urls = []
