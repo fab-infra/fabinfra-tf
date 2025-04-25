@@ -78,9 +78,19 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
-  - name: fab-gtabs2
+  - name: fab-gts2
     dnsNames:
-      - fab-gtabs2.home.crespel.me
+      - fab-gts2.home.crespel.me
+    usages:
+      - digital signature
+      - key encipherment
+      - client auth
+    issuerRef:
+      name: fabinfra-prod-ca1
+      kind: ClusterIssuer
+  - name: fab-gta9
+    dnsNames:
+      - fab-gta9.home.crespel.me
     usages:
       - digital signature
       - key encipherment
@@ -91,16 +101,6 @@ certificates:
   - name: jean-laptop
     dnsNames:
       - jean-laptop.home.crespel.me
-    usages:
-      - digital signature
-      - key encipherment
-      - client auth
-    issuerRef:
-      name: fabinfra-prod-ca1
-      kind: ClusterIssuer
-  - name: del-laptop
-    dnsNames:
-      - del-laptop.home.crespel.me
     usages:
       - digital signature
       - key encipherment
