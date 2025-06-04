@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     destination:
       ports:
-      - "2022"
+      - "2222"
