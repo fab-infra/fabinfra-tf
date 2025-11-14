@@ -3,7 +3,7 @@ fullnameOverride: otelcol
 mode: daemonset
 
 image:
-  repository: otel/opentelemetry-collector-contrib
+  repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
 
 presets:
   hostMetrics:
