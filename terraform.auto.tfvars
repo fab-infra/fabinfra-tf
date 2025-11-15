@@ -30,7 +30,7 @@ k8s_certmanager_version = "v1.19.1"
 k8s_elastic_operator_version = "3.2.0"
 k8s_ingress_nginx_version = "4.13.3"
 k8s_ingress_nginx_external_ips = ["94.23.252.71"]
-k8s_kubelet_csr_approver_version = "1.2.4"
+k8s_kubelet_csr_approver_version = "1.2.12"
 k8s_metrics_server_version = "3.12.2"
 k8s_openebs_version = "4.1.1"
 
