@@ -15,8 +15,8 @@ ingress:
   hosts:
     - host: "apm.fabinfra.net"
       paths:
-        - path: "/"
-          pathType: ImplementationSpecific
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: apm-tls
       hosts:
