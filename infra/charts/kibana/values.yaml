@@ -24,14 +24,29 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
   hosts:
-    - host: example.org
+    - host: chart-example.local
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
   #  - secretName: example-tls
   #    hosts:
-  #      - example.org
+  #      - chart-example.local
+
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+    - name: gateway
+      sectionName: http
+      # namespace: default
+  hostnames:
+    - chart-example.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
 
 nodeSelector:
   server-role-infra: "true"
