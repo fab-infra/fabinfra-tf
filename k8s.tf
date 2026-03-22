@@ -143,6 +143,30 @@ resource "helm_release" "k8s_certmanager_config" {
   }
 }
 
+// Cert-manager webhook for OVH
+resource "helm_release" "k8s_certmanager_webhook_ovh" {
+  name       = "cert-manager-webhook-ovh"
+  repository = "https://aureq.github.io/cert-manager-webhook-ovh/"
+  chart      = "cert-manager-webhook-ovh"
+  version    = var.k8s_certmanager_webhook_ovh_version
+  namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
+
+  values = [file("${path.module}/k8s/values/cert-manager-webhook-ovh.yaml")]
+
+  set_sensitive {
+    name  = "issuers[0].ovhAuthentication.applicationKey"
+    value = var.k8s_certmanager_webhook_ovh_application_key
+  }
+  set_sensitive {
+    name  = "issuers[0].ovhAuthentication.applicationSecret"
+    value = var.k8s_certmanager_webhook_ovh_application_secret
+  }
+  set_sensitive {
+    name  = "issuers[0].ovhAuthentication.applicationConsumerKey"
+    value = var.k8s_certmanager_webhook_ovh_consumer_key
+  }
+}
+
 // Elastic ECK operator namespace
 resource "kubernetes_namespace" "k8s_elastic_operator_ns" {
   metadata {

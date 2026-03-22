@@ -1,0 +1,17 @@
+groupName: acme.fabinfra.net
+issuers:
+  - name: letsencrypt-prod-ovh
+    create: true
+    kind: ClusterIssuer
+    acmeServerUrl: https://acme-v02.api.letsencrypt.org/directory
+    email: webmaster@fabinfra.net
+    ovhEndpointName: ovh-eu
+    ovhAuthenticationMethod: application
+    ovhAuthentication: {}
+      # applicationKey: toComplete
+      # applicationSecret: toComplete
+      # applicationConsumerKey: toComplete
+pod:
+  selectors:
+    nodeSelector:
+      server-role-web: 'true'

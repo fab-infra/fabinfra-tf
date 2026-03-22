@@ -76,6 +76,21 @@ variable "k8s_certmanager_root_ca_key" {
   description = "Root CA key (PEM-encoded)"
   sensitive   = true
 }
+variable "k8s_certmanager_webhook_ovh_version" {
+  description = "Cert-manager Webhook OVH Helm chart version"
+}
+variable "k8s_certmanager_webhook_ovh_application_key" {
+  description = "Cert-manager Webhook OVH application key"
+  sensitive   = true
+}
+variable "k8s_certmanager_webhook_ovh_application_secret" {
+  description = "Cert-manager Webhook OVH application secret"
+  sensitive   = true
+}
+variable "k8s_certmanager_webhook_ovh_consumer_key" {
+  description = "Cert-manager Webhook OVH consumer key"
+  sensitive   = true
+}
 variable "k8s_elastic_operator_version" {
   description = "Elastic ECK operator Helm chart version"
 }
