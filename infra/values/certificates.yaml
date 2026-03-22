@@ -1,6 +1,43 @@
 fullnameOverride: certificates
 
 certificates:
+  # Domains
+  - name: fabinfra-net
+    cn: fabinfra.net
+    dnsNames:
+      - fabinfra.net
+      - '*.fabinfra.net'
+    usages:
+      - digital signature
+      - key encipherment
+      - server auth
+    issuerRef:
+      name: letsencrypt-prod-ovh
+      kind: ClusterIssuer
+  - name: crespel-me
+    cn: crespel.me
+    dnsNames:
+      - crespel.me
+      - '*.crespel.me'
+    usages:
+      - digital signature
+      - key encipherment
+      - server auth
+    issuerRef:
+      name: letsencrypt-prod-ovh
+      kind: ClusterIssuer
+  - name: jediholo-net
+    cn: jediholo.net
+    dnsNames:
+      - jediholo.net
+      - '*.jediholo.net'
+    usages:
+      - digital signature
+      - key encipherment
+      - server auth
+    issuerRef:
+      name: letsencrypt-prod-ovh
+      kind: ClusterIssuer
   # VPN servers
   - name: ks14
     cn: ks14.srv.fabinfra.net
@@ -58,29 +95,9 @@ certificates:
     issuerRef:
       name: fabinfra-prod-ca1
       kind: ClusterIssuer
-  - name: fab-precision7530
-    dnsNames:
-      - fab-precision7530.home.crespel.me
-    usages:
-      - digital signature
-      - key encipherment
-      - client auth
-    issuerRef:
-      name: fabinfra-prod-ca1
-      kind: ClusterIssuer
   - name: fab-iphone
     dnsNames:
       - fab-iphone.home.crespel.me
-    usages:
-      - digital signature
-      - key encipherment
-      - client auth
-    issuerRef:
-      name: fabinfra-prod-ca1
-      kind: ClusterIssuer
-  - name: fab-gts2
-    dnsNames:
-      - fab-gts2.home.crespel.me
     usages:
       - digital signature
       - key encipherment
