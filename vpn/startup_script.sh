@@ -5,10 +5,10 @@ curl -sS https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh | 
 
 # Install packages
 apt-get -q update
-DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends firewalld openvpn
+DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew" --no-install-recommends firewalld nftables openvpn
 
 # Enable IP forwarding
-sed -i 's/^#net.ipv4.ip_forward=.*/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/99-custom.conf
 sysctl -p --system
 
 # Start and configure firewall
@@ -19,10 +19,14 @@ firewall-cmd --permanent --zone=public --add-interface=ens4
 firewall-cmd --permanent --zone=public --add-service=https
 firewall-cmd --permanent --zone=public --add-port=1194/tcp
 firewall-cmd --permanent --zone=public --add-forward-port=port=443:proto=tcp:toport=1194
-firewall-cmd --permanent --zone=public --add-masquerade
 firewall-cmd --permanent --new-zone=vpn
 firewall-cmd --permanent --zone=vpn --add-interface=tun0
 firewall-cmd --permanent --new-zone=default
+firewall-cmd --permanent --new-policy=vpn-clients
+firewall-cmd --permanent --policy=vpn-clients --add-ingress-zone=vpn
+firewall-cmd --permanent --policy=vpn-clients --add-egress-zone=public
+firewall-cmd --permanent --policy=vpn-clients --set-target=ACCEPT
+firewall-cmd --permanent --policy=vpn-clients --add-masquerade
 firewall-cmd --reload
 firewall-cmd --set-default-zone=default
 
