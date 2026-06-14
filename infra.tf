@@ -130,7 +130,7 @@ resource "helm_release" "infra_kibana" {
 }
 
 // OpenTelemetry Collector Agent
-resource "helm_release" "infra_otelcol" {
+resource "helm_release" "infra_otelcol_agent" {
   name       = "otelcol"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   chart      = "opentelemetry-collector"
@@ -139,22 +139,25 @@ resource "helm_release" "infra_otelcol" {
 
   values = [file("${path.module}/infra/values/otelcol-agent.yaml")]
 
-  depends_on = [kubernetes_secret.infra_otelcol_secret]
+  depends_on = [kubernetes_secret.infra_otelcol_agent_secret]
 }
-
-// OpenTelemetry Collector Gateway
-resource "kubernetes_secret" "infra_otelcol_secret" {
+resource "kubernetes_secret" "infra_otelcol_agent_secret" {
   metadata {
-    name      = "otelcol-secret"
+    name      = "otelcol-agent-secret"
     namespace = kubernetes_namespace.infra_ns.metadata[0].name
   }
   type = "Opaque"
   data = {
-    OTELCOL_OTLPHTTP_ENDPOINT = var.infra_otelcol_otlphttp_endpoint
-    OTELCOL_OTLPHTTP_USERNAME = var.infra_otelcol_otlphttp_username
-    OTELCOL_OTLPHTTP_PASSWORD = var.infra_otelcol_otlphttp_password
+    MYSQL_MONITORING_USERNAME = var.infra_otelcol_mysql_monitoring_username
+    MYSQL_MONITORING_PASSWORD = var.infra_otelcol_mysql_monitoring_password
   }
 }
+moved {
+  from = helm_release.infra_otelcol
+  to = helm_release.infra_otelcol_agent
+}
+
+// OpenTelemetry Collector Gateway
 resource "helm_release" "infra_otelcol_gateway" {
   name       = "otelcol-gateway"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
@@ -164,5 +167,17 @@ resource "helm_release" "infra_otelcol_gateway" {
 
   values = [file("${path.module}/infra/values/otelcol-gateway.yaml")]
 
-  depends_on = [kubernetes_secret.infra_otelcol_secret]
+  depends_on = [kubernetes_secret.infra_otelcol_gateway_secret]
+}
+resource "kubernetes_secret" "infra_otelcol_gateway_secret" {
+  metadata {
+    name      = "otelcol-gateway-secret"
+    namespace = kubernetes_namespace.infra_ns.metadata[0].name
+  }
+  type = "Opaque"
+  data = {
+    OTELCOL_OTLPHTTP_ENDPOINT = var.infra_otelcol_otlphttp_endpoint
+    OTELCOL_OTLPHTTP_USERNAME = var.infra_otelcol_otlphttp_username
+    OTELCOL_OTLPHTTP_PASSWORD = var.infra_otelcol_otlphttp_password
+  }
 }

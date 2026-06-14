@@ -76,6 +76,8 @@ dns_records = [
 
 # Infra
 infra_namespace = "infra"
+#infra_otelcol_mysql_monitoring_username = "toComplete"
+#infra_otelcol_mysql_monitoring_password = "toComplete"
 infra_otelcol_otlphttp_endpoint = "https://otlp-gateway-prod-us-central-0.grafana.net/otlp"
 #infra_otelcol_otlphttp_username = "toComplete"
 #infra_otelcol_otlphttp_password = "toComplete"

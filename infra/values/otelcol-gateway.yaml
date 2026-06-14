@@ -128,7 +128,7 @@ ports:
 
 extraEnvsFrom:
   - secretRef:
-      name: otelcol-secret
+      name: otelcol-gateway-secret
 
 resources:
   limits:

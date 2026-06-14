@@ -130,6 +130,13 @@ variable "dns_records" {
 variable "infra_namespace" {
   description = "Infra Kubernetes namespace"
 }
+variable "infra_otelcol_mysql_monitoring_username" {
+  description = "OpenTelemetry MySQL monitoring username"
+}
+variable "infra_otelcol_mysql_monitoring_password" {
+  description = "OpenTelemetry MySQL monitoring password"
+  sensitive   = true
+}
 variable "infra_otelcol_otlphttp_endpoint" {
   description = "OpenTelemetry OTLP HTTP endpoint"
 }

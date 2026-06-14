@@ -120,6 +120,10 @@ ports:
   zipkin:
     enabled: false
 
+extraEnvsFrom:
+  - secretRef:
+      name: otelcol-agent-secret
+
 resources:
   limits:
     cpu: 250m
