@@ -6,6 +6,9 @@ image:
   repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
 
 presets:
+  annotationDiscovery:
+    metrics:
+      enabled: true
   hostMetrics:
     enabled: true
   kubernetesAttributes:
@@ -14,6 +17,8 @@ presets:
     enabled: true
     includeCollectorLogs: true
     storeCheckpoints: true
+  resourceDetection:
+    enabled: true
 
 config:
   receivers:
@@ -82,29 +87,24 @@ config:
                 regex: ([^:]+)(?::\d+)?;(\d+)
                 replacement: $$1:$$2
   processors:
-    resourcedetection:
+    resourcedetection/env:
       # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/resourcedetectionprocessor
-      detectors: ["system", "k8snode"]
+      detectors: ["system"]
       override: false
   exporters:
     otlphttp:
       # https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlphttpexporter
       endpoint: "http://otelcol-gateway:4318"
   service:
-    extensions:
-      - health_check
     pipelines:
       traces:
         receivers: [otlp]
-        processors: [memory_limiter, resourcedetection, k8sattributes, batch]
         exporters: [otlphttp]
       metrics:
-        receivers: [otlp, prometheus, hostmetrics]
-        processors: [memory_limiter, resourcedetection, k8sattributes, batch]
+        receivers: [otlp, prometheus]
         exporters: [otlphttp]
       logs:
         receivers: [otlp]
-        processors: [memory_limiter, resourcedetection, k8sattributes, batch]
         exporters: [otlphttp]
 
 hostNetwork: true
@@ -119,13 +119,6 @@ ports:
     enabled: false
   zipkin:
     enabled: false
-
-clusterRole:
-  create: true
-  rules:
-    - apiGroups: [""]
-      resources: ["nodes"]
-      verbs: ["get", "list"]
 
 resources:
   limits:
