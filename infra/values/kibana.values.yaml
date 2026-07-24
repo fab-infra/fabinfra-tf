@@ -1,5 +1,9 @@
 fullnameOverride: kibana
 
+image:
+  repository: docker.elastic.co/kibana/kibana
+  tag: "9.4.4"
+
 podSecurityContext:
   runAsUser: 1000
   runAsGroup: 1000

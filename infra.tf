@@ -99,7 +99,7 @@ resource "helm_release" "infra_apm" {
   chart     = "${path.module}/infra/charts/apm"
   namespace = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/apm.yaml")]
+  values = [file("${path.module}/infra/values/apm.values.yaml")]
 }
 
 // Certificates
@@ -108,7 +108,7 @@ resource "helm_release" "infra_certificates" {
   chart     = "${path.module}/infra/charts/certificates"
   namespace = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/certificates.yaml")]
+  values = [file("${path.module}/infra/values/certificates.values.yaml")]
 }
 
 // Elasticsearch
@@ -117,7 +117,7 @@ resource "helm_release" "infra_elasticsearch" {
   chart     = "${path.module}/infra/charts/elasticsearch"
   namespace = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/elasticsearch.yaml")]
+  values = [file("${path.module}/infra/values/elasticsearch.values.yaml")]
 }
 
 // Kibana
@@ -126,7 +126,7 @@ resource "helm_release" "infra_kibana" {
   chart     = "${path.module}/infra/charts/kibana"
   namespace = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/kibana.yaml")]
+  values = [file("${path.module}/infra/values/kibana.values.yaml")]
 }
 
 // OpenTelemetry Collector Agent
@@ -137,7 +137,7 @@ resource "helm_release" "infra_otelcol_agent" {
   version    = var.infra_otelcol_version
   namespace  = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/otelcol-agent.yaml")]
+  values = [file("${path.module}/infra/values/otelcol-agent.values.yaml")]
 
   depends_on = [kubernetes_secret.infra_otelcol_agent_secret]
 }
@@ -165,7 +165,7 @@ resource "helm_release" "infra_otelcol_gateway" {
   version    = var.infra_otelcol_version
   namespace  = kubernetes_namespace.infra_ns.metadata[0].name
 
-  values = [file("${path.module}/infra/values/otelcol-gateway.yaml")]
+  values = [file("${path.module}/infra/values/otelcol-gateway.values.yaml")]
 
   depends_on = [kubernetes_secret.infra_otelcol_gateway_secret]
 }
