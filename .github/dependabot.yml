@@ -9,3 +9,9 @@ updates:
       interval: "monthly"
     commit-message:
       prefix: "infra"
+  - package-ecosystem: "docker"
+    directory: "/k8s/values"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "k8s"

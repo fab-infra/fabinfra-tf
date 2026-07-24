@@ -101,7 +101,7 @@ resource "helm_release" "k8s_calico" {
   version    = var.k8s_calico_version
   namespace  = "tigera-operator"
 
-  values = [file("${path.module}/k8s/values/calico.yaml")]
+  values = [file("${path.module}/k8s/values/calico.values.yaml")]
 }
 
 // Cert-manager namespace
@@ -122,7 +122,7 @@ resource "helm_release" "k8s_certmanager" {
   version    = var.k8s_certmanager_version
   namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
 
-  values = [file("${path.module}/k8s/values/cert-manager.yaml")]
+  values = [file("${path.module}/k8s/values/cert-manager.values.yaml")]
 }
 
 // Cert-manager configuratrion
@@ -131,7 +131,7 @@ resource "helm_release" "k8s_certmanager_config" {
   chart     = "${path.module}/k8s/charts/cert-manager-config"
   namespace = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
 
-  values = [file("${path.module}/k8s/values/cert-manager-config.yaml")]
+  values = [file("${path.module}/k8s/values/cert-manager-config.values.yaml")]
 
   set_sensitive {
     name  = "clusterIssuer.ca.root.crt"
@@ -151,7 +151,7 @@ resource "helm_release" "k8s_certmanager_webhook_ovh" {
   version    = var.k8s_certmanager_webhook_ovh_version
   namespace  = kubernetes_namespace.k8s_certmanager_ns.metadata[0].name
 
-  values = [file("${path.module}/k8s/values/cert-manager-webhook-ovh.yaml")]
+  values = [file("${path.module}/k8s/values/cert-manager-webhook-ovh.values.yaml")]
 
   set_sensitive {
     name  = "issuers[0].ovhAuthentication.applicationKey"
@@ -204,7 +204,7 @@ resource "helm_release" "k8s_ingress_nginx" {
   version    = var.k8s_ingress_nginx_version
   namespace  = kubernetes_namespace.k8s_ingress_nginx_ns.metadata[0].name
 
-  values = [file("${path.module}/k8s/values/ingress-nginx.yaml")]
+  values = [file("${path.module}/k8s/values/ingress-nginx.values.yaml")]
 
   set {
     name  = "controller.service.externalIPs"
@@ -248,5 +248,5 @@ resource "helm_release" "k8s_openebs" {
   version    = var.k8s_openebs_version
   namespace  = kubernetes_namespace.k8s_openebs_ns.metadata[0].name
 
-  values = [file("${path.module}/k8s/values/openebs.yaml")]
+  values = [file("${path.module}/k8s/values/openebs.values.yaml")]
 }
