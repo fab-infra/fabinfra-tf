@@ -9,9 +9,15 @@ updates:
       interval: "monthly"
     commit-message:
       prefix: "infra"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "docker"
     directory: "/k8s/values"
     schedule:
       interval: "monthly"
     commit-message:
       prefix: "k8s"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
