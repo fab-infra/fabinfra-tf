@@ -110,6 +110,17 @@ variable "k8s_metrics_server_version" {
 variable "k8s_openebs_version" {
   description = "OpenEBS chart version"
 }
+variable "k8s_velero_version" {
+  description = "Velero Helm chart version"
+}
+variable "k8s_velero_s3_access_key_id" {
+  description = "Velero S3 Access Key ID"
+  sensitive   = true
+}
+variable "k8s_velero_s3_secret_access_key" {
+  description = "Velero S3 Secret Access Key"
+  sensitive   = true
+}
 
 // DNS config
 variable "dns_zone" {

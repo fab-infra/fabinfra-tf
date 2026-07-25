@@ -1,0 +1,32 @@
+initContainers:
+  - name: velero-plugin-for-aws
+    image: docker.io/velero/velero-plugin-for-aws:v1.14.2
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+configuration:
+  backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: fabinfra-net-backups
+      prefix: velero
+      default: true
+      credential:
+        name: velero-credentials
+        key: cloud
+      config:
+        region: rbx
+        s3Url: https://s3.rbx.io.cloud.ovh.net
+        publicUrl: https://fabinfra-net-backups.s3.rbx.io.cloud.ovh.net
+  volumeSnapshotLocation: []
+
+credentials:
+  name: velero-credentials
+
+schedules:
+  daily-backup:
+    schedule: "0 3 * * *"
+    template:
+      ttl: 720h

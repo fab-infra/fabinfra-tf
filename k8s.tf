@@ -250,3 +250,29 @@ resource "helm_release" "k8s_openebs" {
 
   values = [file("${path.module}/k8s/values/openebs.values.yaml")]
 }
+
+// Velero namespace
+resource "kubernetes_namespace" "k8s_velero_ns" {
+  metadata {
+    name = "velero"
+    labels = {
+      "name" = "velero"
+    }
+  }
+}
+
+// Velero
+resource "helm_release" "k8s_velero" {
+  name       = "velero"
+  repository = "https://vmware-tanzu.github.io/helm-charts"
+  chart      = "velero"
+  version    = var.k8s_velero_version
+  namespace  = kubernetes_namespace.k8s_velero_ns.metadata[0].name
+
+  values = [file("${path.module}/k8s/values/velero.values.yaml")]
+
+  set_sensitive {
+    name = "credentials.secretContents.cloud"
+    value = "[default]\naws_access_key_id=${var.k8s_velero_s3_access_key_id}\naws_secret_access_key=${var.k8s_velero_s3_secret_access_key}\n"
+  }
+}

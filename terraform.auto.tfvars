@@ -37,6 +37,9 @@ k8s_ingress_nginx_external_ips = ["94.23.252.71"]
 k8s_kubelet_csr_approver_version = "1.2.12"
 k8s_metrics_server_version = "3.12.2"
 k8s_openebs_version = "4.3.3"
+k8s_velero_version = "12.1.0"
+#k8s_velero_s3_access_key_id = "toComplete"
+#k8s_velero_s3_secret_access_key = "toComplete"
 
 # DNS records
 dns_zone = "fabinfra.net"
