@@ -3,6 +3,8 @@ ovh_endpoint = "ovh-eu"
 #ovh_application_key = "toComplete"
 #ovh_application_secret = "toComplete"
 #ovh_consumer_key = "toComplete"
+#ovh_project_id = "toComplete"
+ovh_region = "RBX"
 
 # GCP provider
 #gcp_credentials = "toComplete"
@@ -85,6 +87,24 @@ infra_otelcol_otlphttp_endpoint = "https://otlp-gateway-prod-us-central-0.grafan
 #infra_otelcol_otlphttp_username = "toComplete"
 #infra_otelcol_otlphttp_password = "toComplete"
 infra_otelcol_version = "0.158.1"
+
+# Storage
+storage_bucket_prefix = "fabinfra-net"
+storage_bucket_names = [ "backups" ]
+storage_bucket_rules = {
+  "backups" = [
+    {
+      id: "30d-infrequent-access"
+      status: "enabled"
+      transitions: [
+        {
+          days: 30
+          storage_class: "STANDARD_IA"
+        }
+      ]
+    }
+  ]
+}
 
 # Uptime checks
 uptime_check_urls = []

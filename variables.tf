@@ -14,6 +14,12 @@ variable "ovh_consumer_key" {
   description = "OVH consumer key"
   sensitive   = true
 }
+variable "ovh_project_id" {
+  description = "OVH public cloud project ID"
+}
+variable "ovh_region" {
+  description = "OVH public cloud region"
+}
 
 // Google Cloud provider
 variable "gcp_credentials" {
@@ -160,6 +166,34 @@ variable "infra_otelcol_otlphttp_password" {
 }
 variable "infra_otelcol_version" {
   description = "OpenTelemetry Collector Helm chart version"
+}
+
+// Storage
+variable "storage_bucket_prefix" {
+  description = "Storage buckets prefix"
+}
+variable "storage_bucket_names" {
+  default     = []
+  type        = list(string)
+  description = "Storage bucket names (excluding prefix)"
+}
+variable "storage_bucket_rules" {
+  default = {}
+  type = map(list(object({
+    id     = string
+    status = string
+    filter = optional(object({
+      prefix = string
+    }))
+    expiration = optional(object({
+      days = number
+    }))
+    transitions = optional(list(object({
+      days          = number
+      storage_class = string
+    })))
+  })))
+  description = "Storage bucket lifecycle rules (map of bucket name to list of rules)"
 }
 
 // Uptime checks
