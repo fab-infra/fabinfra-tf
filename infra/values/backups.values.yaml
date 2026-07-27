@@ -1,0 +1,23 @@
+fullnameOverride: backups
+
+image:
+  repository: ghcr.io/fab-infra/backuptools
+  tag: opensuse16-20260607-0648-ca5d315
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+nodeSelector:
+  server-role-infra: "true"
+
+schedules:
+  sync: "30 3 * * *"
+
+env:
+  BACKUP_GCS_BUCKET: fabinfra-net-backups
+  BACKUP_S3_BUCKET: fabinfra-net-backups
+  BACKUP_S3_PROVIDER: OVH
+  BACKUP_S3_REGION: rbx
+  BACKUP_SYNC_BACKENDS: s3,gcs
+  BACKUP_SYNC_ARGS: s3:fabinfra-net-backups gcs:fabinfra-net-backups --checksum

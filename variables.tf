@@ -147,6 +147,18 @@ variable "dns_records" {
 variable "infra_namespace" {
   description = "Infra Kubernetes namespace"
 }
+variable "infra_backups_gcs_sa" {
+  description = "Google Service Account JSON key for backups"
+  sensitive   = true
+}
+variable "infra_backups_s3_access_key_id" {
+  description = "Amazon S3 Access Key ID for backups"
+  sensitive   = true
+}
+variable "infra_backups_s3_secret_access_key" {
+  description = "Amazon S3 Secret Access Key for backups"
+  sensitive   = true
+}
 variable "infra_otelcol_mysql_monitoring_username" {
   description = "OpenTelemetry MySQL monitoring username"
 }

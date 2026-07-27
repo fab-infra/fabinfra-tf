@@ -102,6 +102,28 @@ resource "helm_release" "infra_apm" {
   values = [file("${path.module}/infra/values/apm.values.yaml")]
 }
 
+// Backups
+resource "helm_release" "infra_backups" {
+  name      = "backups"
+  chart     = "${path.module}/infra/charts/backups"
+  namespace = kubernetes_namespace.infra_ns.metadata[0].name
+
+  values = [file("${path.module}/infra/values/backups.values.yaml")]
+
+  set_sensitive {
+    name  = "secrets.gcs.sa"
+    value = base64encode(var.infra_backups_gcs_sa)
+  }
+  set_sensitive {
+    name  = "secrets.s3.accessKeyId"
+    value = var.infra_backups_s3_access_key_id
+  }
+  set_sensitive {
+    name  = "secrets.s3.secretAccessKey"
+    value = var.infra_backups_s3_secret_access_key
+  }
+}
+
 // Certificates
 resource "helm_release" "infra_certificates" {
   name      = "certificates"

@@ -81,6 +81,9 @@ dns_records = [
 
 # Infra
 infra_namespace = "infra"
+#infra_backups_gcs_sa = "toComplete"
+#infra_backups_s3_access_key_id = "toComplete"
+#infra_backups_s3_secret_access_key = "toComplete"
 #infra_otelcol_mysql_monitoring_username = "toComplete"
 #infra_otelcol_mysql_monitoring_password = "toComplete"
 infra_otelcol_otlphttp_endpoint = "https://otlp-gateway-prod-us-central-0.grafana.net/otlp"
