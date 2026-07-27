@@ -11,13 +11,19 @@ podSecurityContext:
 nodeSelector:
   server-role-infra: "true"
 
+backends:
+  gcs:
+    bucket: fabinfra-net-backups
+  s3:
+    provider: OVH
+    region: rbx
+    bucket: fabinfra-net-backups
+
+backups:
+  sync:
+    backends: s3,gcs
+    args: |
+      s3:fabinfra-net-backups gcs:fabinfra-net-backups --checksum
+
 schedules:
   sync: "30 3 * * *"
-
-env:
-  BACKUP_GCS_BUCKET: fabinfra-net-backups
-  BACKUP_S3_BUCKET: fabinfra-net-backups
-  BACKUP_S3_PROVIDER: OVH
-  BACKUP_S3_REGION: rbx
-  BACKUP_SYNC_BACKENDS: s3,gcs
-  BACKUP_SYNC_ARGS: s3:fabinfra-net-backups gcs:fabinfra-net-backups --checksum

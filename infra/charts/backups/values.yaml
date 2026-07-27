@@ -41,17 +41,23 @@ tolerations: []
 
 affinity: {}
 
-env: {}
-  # BACKUP_BACKEND: multi
-  # BACKUP_BACKENDS: swift,gcs,ftp
-  # BACKUP_FTP_HOST: ftpbackup.example.org
-  # BACKUP_FTP_DIR: example.org
-  # BACKUP_GCS_BUCKET: example-org-backups
-  # BACKUP_S3_BUCKET: example-org-backups
-  # BACKUP_S3_PROVIDER: OVH
-  # BACKUP_S3_REGION: rbx
-  # BACKUP_SYNC_BACKENDS: swift,gcs
-  # BACKUP_SYNC_ARGS: pcs:container gcs:bucket
+backends:
+  ftp:
+    host: ""      # ftpbackup.example.org
+    dir: ""       # example
+  gcs:
+    bucket: ""    # example-org-backups
+  s3:
+    provider: ""  # OVH
+    region: ""    # rbx
+    bucket: ""    # example-org-backups
+  swift:
+    container: "" # example-org-backups
+
+backups:
+  sync:
+    backends: ""  # swift,gcs
+    args: ""      # pcs:container gcs:bucket
 
 schedules: {}
   # sync: "0 5 * * *"
@@ -67,3 +73,5 @@ secrets:
     secretAccessKey: ""
   swift:
     openrc: ""
+
+env: {}
