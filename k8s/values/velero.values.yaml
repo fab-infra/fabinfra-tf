@@ -19,7 +19,6 @@ configuration:
       config:
         region: rbx
         s3Url: https://s3.rbx.io.cloud.ovh.net
-        publicUrl: https://fabinfra-net-backups.s3.rbx.io.cloud.ovh.net
   volumeSnapshotLocation: []
 
 credentials:
