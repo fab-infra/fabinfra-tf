@@ -2,7 +2,7 @@ fullnameOverride: backups
 
 image:
   repository: ghcr.io/fab-infra/backuptools
-  tag: opensuse16-20260607-0648-ca5d315
+  tag: opensuse16-20260728-1847-563bf6e
 
 podSecurityContext:
   runAsUser: 1000
