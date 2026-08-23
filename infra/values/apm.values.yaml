@@ -2,7 +2,7 @@ fullnameOverride: apm
 
 image:
   repository: docker.elastic.co/apm/apm-server
-  tag: "9.4.4"
+  tag: "9.5.2"
 
 podSecurityContext:
   runAsUser: 1000
