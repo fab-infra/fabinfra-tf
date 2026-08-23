@@ -4,7 +4,7 @@ mode: daemonset
 
 image:
   repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
-  tag: "0.157.0"
+  tag: "0.159.0"
 
 presets:
   annotationDiscovery:
