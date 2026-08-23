@@ -6,7 +6,9 @@ updates:
   - package-ecosystem: "docker"
     directory: "/infra/values"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
     commit-message:
       prefix: "infra"
     ignore:
@@ -15,7 +17,9 @@ updates:
   - package-ecosystem: "docker"
     directory: "/k8s/values"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
     commit-message:
       prefix: "k8s"
     ignore:
