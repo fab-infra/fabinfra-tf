@@ -2,7 +2,7 @@ fullnameOverride: elasticsearch
 
 image:
   repository: docker.elastic.co/elasticsearch/elasticsearch
-  tag: "9.5.2"
+  tag: "9.5.3"
 
 podSecurityContext:
   runAsUser: 1000
