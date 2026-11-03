@@ -47,7 +47,7 @@ tolerations: []
 affinity: {}
 
 config:
-  node.roles: ["master", "data", "ingest", "transform"]
+  node.roles: ["master", "data", "ingest", "transform", "remote_cluster_client"]
   path.repo: ["/usr/share/elasticsearch/repo"]
 
 env: {}
